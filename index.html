@@ -185,7 +185,63 @@ main{padding:18px}
 
 .note{font-size:11px;color:var(--mut);line-height:1.6;background:var(--bg2);border-left:3px solid var(--acc);padding:11px 13px;border-radius:0 10px 10px 0;margin-top:8px}
 .reset-link{display:block;text-align:center;color:var(--mut);font-size:11px;margin:24px 0 8px;text-decoration:underline;cursor:pointer}
+
+/* LINK DISCRETO P/ FREQUÊNCIA */
+.freq-link{
+  width:100%;margin-top:14px;background:var(--card);border:1px solid var(--line);
+  color:var(--mut);border-radius:14px;padding:14px 16px;cursor:pointer;
+  display:flex;align-items:center;gap:10px;font-family:'Sora';font-size:13px;font-weight:500;
+  transition:.2s;
+}
+.freq-link:active{transform:scale(.99)}
+.freq-link:hover{border-color:var(--acc2);color:var(--txt)}
+.freq-link svg{width:18px;height:18px;stroke-width:2;flex-shrink:0;color:var(--acc2)}
+.freq-link-arrow{margin-left:auto;font-size:20px;color:var(--mut)}
+.back-link{
+  background:none;border:none;color:var(--mut);font-family:'Sora';font-size:13px;
+  font-weight:600;cursor:pointer;padding:0;margin-bottom:14px;display:inline-flex;align-items:center;gap:3px;
+}
+.back-link:hover{color:var(--acc)}
 .pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:6px;background:rgba(52,211,153,.14);color:var(--grn);font-weight:600;margin-left:6px}
+
+/* CALCULADORA DE PERFIL */
+.calc-title{font-family:'Bebas Neue';font-size:18px;letter-spacing:1px;margin-bottom:14px}
+
+/* CARD RECOLHÍVEL */
+.calc-head{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.calc-head .calc-title{margin-bottom:0}
+.calc-summary{margin-left:auto;font-size:12px;color:var(--acc2);font-weight:600;text-align:right;line-height:1.3;display:none}
+.calc-chevron{font-size:20px;color:var(--mut);transition:transform .3s;flex-shrink:0;line-height:1}
+.calc-card.collapsed .calc-chevron{transform:rotate(-90deg)}
+.calc-card.collapsed .calc-summary{display:block}
+.calc-card.collapsed .calc-head .calc-title{color:var(--txt)}
+.calc-body{overflow:hidden;transition:max-height .35s ease,opacity .25s ease,margin .3s ease;max-height:1600px;opacity:1;margin-top:14px}
+.calc-card.collapsed .calc-body{max-height:0;opacity:0;margin-top:0}
+
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc-grid label{display:flex;flex-direction:column;gap:5px;font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.calc-grid label.full{grid-column:1 / -1}
+.calc-grid input,.calc-grid select{
+  background:var(--card2);border:1px solid var(--line);color:var(--txt);
+  padding:11px 10px;border-radius:11px;font-family:'Sora';font-size:13px;appearance:none;width:100%;
+}
+.calc-grid input:focus,.calc-grid select:focus{outline:none;border-color:var(--acc)}
+.btn-calc{
+  width:100%;margin-top:14px;border:none;padding:14px;border-radius:13px;cursor:pointer;
+  font-family:'Sora';font-weight:700;font-size:14px;letter-spacing:.3px;transition:.2s;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0a0e14;
+}
+.btn-calc:active{transform:scale(.98)}
+.calc-out{margin-top:14px;display:none}
+.calc-out.show{display:block;animation:fade .3s ease}
+.calc-out .co-kcal{text-align:center;margin-bottom:12px}
+.calc-out .co-kcal .v{font-family:'Bebas Neue';font-size:40px;line-height:1;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.calc-out .co-kcal .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+.calc-out .co-macros{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.calc-out .cm{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 6px;text-align:center}
+.calc-out .cm .cmv{font-family:'Bebas Neue';font-size:22px;line-height:1}
+.calc-out .cm .cml{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.calc-out .cm.p .cmv{color:var(--blu)} .calc-out .cm.c .cmv{color:var(--acc2)} .calc-out .cm.f .cmv{color:var(--pur)}
 </style>
 </head>
 <body>
@@ -204,7 +260,46 @@ main{padding:18px}
   <!-- ============ TREINO ============ -->
   <section class="page on" id="p-treino">
     <div class="sec-title">SEU TREINO</div>
-    <div class="sec-sub">Divisão <b style="color:var(--txt)">Upper / Lower</b> — cada grupo 2×/semana, a frequência com maior respaldo científico para hipertrofia em 4 dias. Toque para marcar séries e conclua o dia.</div>
+    <div class="sec-sub" id="trainSub">Monte um treino sob medida: escolha quantos dias pode treinar, seu objetivo e sua experiência. O app define a melhor divisão e os exercícios com base científica.</div>
+
+    <!-- MONTADOR DE TREINO -->
+    <div class="card calc-card" id="trainCard">
+      <div class="calc-head" onclick="toggleCard('train')">
+        <div class="calc-title">🏋️ Montar meu treino</div>
+        <div class="calc-summary" id="trainSummary"></div>
+        <span class="calc-chevron" id="trainChevron">⌄</span>
+      </div>
+      <div class="calc-body" id="trainBody">
+      <div class="calc-grid">
+        <label class="full">Quantos dias por semana você pode treinar?
+          <select id="inFreq">
+            <option value="2">2 dias</option>
+            <option value="3">3 dias</option>
+            <option value="4" selected>4 dias</option>
+            <option value="5">5 dias</option>
+            <option value="6">6 dias</option>
+          </select>
+        </label>
+        <label class="full">Qual seu objetivo?
+          <select id="inObj">
+            <option value="hyper" selected>Ganhar músculo (hipertrofia)</option>
+            <option value="strength">Ganhar força</option>
+            <option value="endurance">Resistência muscular</option>
+            <option value="general">Condicionamento geral</option>
+          </select>
+        </label>
+        <label class="full">Qual sua experiência?
+          <select id="inExp">
+            <option value="beginner">Iniciante (até ~1 ano)</option>
+            <option value="intermediate" selected>Intermediário (1–3 anos)</option>
+            <option value="advanced">Avançado (3+ anos)</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn-calc" onclick="generatePlan()">Montar treino</button>
+      <div class="note" id="planMethod" style="display:none"></div>
+      </div>
+    </div>
 
     <div class="daysel" id="daysel"></div>
 
@@ -218,15 +313,21 @@ main{padding:18px}
       <button class="btn-done" id="btnDone" onclick="toggleDayDone()">Marcar treino como feito ✓</button>
     </div>
     <div class="note" id="trainNote"></div>
+    <button class="freq-link" onclick="go('cal')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+      Ver minha frequência no mês
+      <span class="freq-link-arrow">›</span>
+    </button>
   </section>
 
   <!-- ============ CALENDÁRIO ============ -->
   <section class="page" id="p-cal">
+    <button class="back-link" onclick="go('treino')">‹ Voltar ao treino</button>
     <div class="sec-title">FREQUÊNCIA</div>
-    <div class="sec-sub">Controle quantas vezes você foi ou faltou ao longo do mês. Dias marcados como concluídos no treino aparecem aqui automaticamente.</div>
+    <div class="sec-sub">Controle quantas vezes você foi ou faltou ao longo do mês. A meta se ajusta à frequência do seu treino atual. Dias marcados como concluídos no treino aparecem aqui automaticamente.</div>
     <div class="statgrid">
       <div class="stat"><div class="v" id="stWent">0</div><div class="l">Treinos no mês</div></div>
-      <div class="stat"><div class="v" id="stGoal">0</div><div class="l">Meta (4×/sem)</div></div>
+      <div class="stat"><div class="v" id="stGoal">0</div><div class="l" id="stGoalLabel">Meta (4×/sem)</div></div>
       <div class="stat"><div class="v" id="stStreak">0</div><div class="l">Sequência</div></div>
     </div>
     <div class="card">
@@ -250,7 +351,54 @@ main{padding:18px}
   <!-- ============ DIETA ============ -->
   <section class="page" id="p-dieta">
     <div class="sec-title">NUTRIÇÃO</div>
-    <div class="sec-sub">Meta calculada para <b style="color:var(--txt)">ganho de massa magro</b> (superávit leve). Adicione o que comeu e os macros atualizam em tempo real.</div>
+    <div class="sec-sub">Preencha seu perfil abaixo e a meta de calorias e macros é calculada cientificamente. Depois adicione o que comeu e os macros atualizam em tempo real.</div>
+
+    <!-- CALCULADORA DE PERFIL -->
+    <div class="card calc-card" id="dietCard">
+      <div class="calc-head" onclick="toggleCard('diet')">
+        <div class="calc-title">📊 Seus dados</div>
+        <div class="calc-summary" id="dietSummary"></div>
+        <span class="calc-chevron" id="dietChevron">⌄</span>
+      </div>
+      <div class="calc-body" id="dietBody">
+      <div class="calc-grid">
+        <label>Sexo
+          <select id="inSex">
+            <option value="m">Masculino</option>
+            <option value="f">Feminino</option>
+          </select>
+        </label>
+        <label>Idade
+          <input type="number" id="inAge" placeholder="anos" min="14" max="90">
+        </label>
+        <label>Peso (kg)
+          <input type="number" id="inWeight" placeholder="kg" min="30" max="250" step="0.1">
+        </label>
+        <label>Altura (cm)
+          <input type="number" id="inHeight" placeholder="cm" min="120" max="220">
+        </label>
+        <label class="full">Nível de atividade
+          <select id="inAct">
+            <option value="1.2">Sedentário (só treino, resto parado)</option>
+            <option value="1.375">Leve (anda um pouco no dia)</option>
+            <option value="1.55" selected>Moderado (treino 4×/sem, rotina ativa)</option>
+            <option value="1.725">Alto (trabalho físico + treino)</option>
+            <option value="1.9">Muito alto (atleta / 2 turnos)</option>
+          </select>
+        </label>
+        <label class="full">Objetivo
+          <select id="inGoal">
+            <option value="gain">Ganhar massa (superávit leve)</option>
+            <option value="keep">Manter peso</option>
+            <option value="lose">Perder gordura (déficit)</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn-calc" onclick="calcGoal()">Calcular meta</button>
+      <div class="calc-out" id="calcOut"></div>
+      <div class="note" id="calcMethod" style="display:none"></div>
+      </div>
+    </div>
 
     <div class="card">
       <div class="macro-ring-wrap">
@@ -295,60 +443,212 @@ main{padding:18px}
   <button class="tab on" data-p="treino" onclick="go('treino')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 7v10M18 7v10M4 9v6M20 9v6M6 12h12" stroke-linecap="round"/></svg>Treino
   </button>
-  <button class="tab" data-p="cal" onclick="go('cal')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>Frequência
-  </button>
   <button class="tab" data-p="dieta" onclick="go('dieta')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8a3 3 0 006 0V3M9 3v18M18 3c-1.5 0-2 3-2 6s.5 4 2 4v8" stroke-linecap="round" stroke-linejoin="round"/></svg>Nutrição
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 7c-1.5-2-4-2.5-5.5-1.5C4 7 4 11 5.5 14c1 2 2.5 4 4 4 1 0 1.5-.5 2.5-.5s1.5.5 2.5.5c1.5 0 3-2 4-4 1.5-3 1.5-7-1-8.5C16 4.5 13.5 5 12 7Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7c0-1.5.5-3 2-4" stroke-linecap="round"/></svg>Nutrição
   </button>
 </nav>
 
 <script>
-/* ===================== DADOS DO TREINO ===================== */
-/* Upper/Lower 4x — frequência 2x por grupo. Lower A = ênfase quadríceps/agacho; Lower B = ênfase posterior/terra. Upper A = ênfase horizontal; Upper B = ênfase vertical. */
-const PLAN = [
-  { day:"D1", label:"Upper A", focus:"Peito · Costas · Ombro · Braço — ênfase horizontal", ex:[
-    {n:"Supino inclinado com halteres (30–45°)",s:"4",r:"8–10",rest:"2min",tip:"Substitui a barra reta: amplitude maior, alonga o peito embaixo e é seguro p/ o ombro (você solta os halteres se falhar). Desça bem fundo."},
-    {n:"Remada serrote / unilateral com halter",s:"4",r:"8–12",rest:"90s",tip:"Forte na posição alongada das costas. Deixe o peso puxar o ombro à frente embaixo, contraia em cima."},
-    {n:"Crucifixo na máquina (peck-deck) ou cross",s:"3",r:"12–15",rest:"75s",tip:"Tensão máxima no peito esticado. Pausa de 1s no alongamento."},
-    {n:"Puxada alta com pegada neutra",s:"3",r:"10–12",rest:"90s",tip:"Pega neutra é mais confortável p/ o ombro/cotovelo. Estique total no topo."},
-    {n:"Elevação lateral (halter ou cabo)",s:"4",r:"12–20",rest:"60s",tip:"Deltóide medial = largura dos ombros. No cabo, a tensão na posição alongada é melhor."},
-    {n:"Rosca inclinada com halteres",s:"3",r:"10–12",rest:"60s",tip:"Banco inclinado deixa o bíceps alongado atrás do corpo — posição forte p/ crescimento."},
-    {n:"Tríceps francês / extensão por cima da cabeça (cabo)",s:"3",r:"10–15",rest:"60s",tip:"Alonga a cabeça longa do tríceps. Melhor que pushdown puro p/ massa."},
-  ]},
-  { day:"D2", label:"Lower A", focus:"Pernas — ênfase quadríceps", ex:[
-    {n:"Agachamento (livre ou hack/smith)",s:"4",r:"6–10",rest:"2–3min",tip:"Grande construtor de quadríceps. Hack ou Smith permitem ir fundo com segurança e sem equilíbrio limitando a carga. Desça até a coxa abaixo da paralela."},
-    {n:"Leg press 45°",s:"4",r:"10–12",rest:"2min",tip:"Permite alta carga sem risco lombar. Desça até flexão profunda do joelho (posição alongada do quadríceps)."},
-    {n:"Cadeira extensora",s:"3",r:"12–15",rest:"75s",tip:"Isolamento direto do quadríceps. Encoste-se para trás no banco para alongar o reto femoral."},
-    {n:"Mesa flexora deitada",s:"3",r:"10–15",rest:"75s",tip:"Pega o posterior também no dia de quadríceps, equilibrando a articulação do joelho."},
-    {n:"Panturrilha em pé (ou no leg press)",s:"4",r:"10–15",rest:"60s",tip:"Pausa de 1–2s no alongamento embaixo — onde a panturrilha cresce mais."},
-    {n:"Abdominal na polia (crunch) ou elevação de pernas",s:"3",r:"12–15",rest:"60s",tip:"Adicione carga progressiva; o abdômen responde a sobrecarga como qualquer músculo."},
-  ]},
-  { day:"D3", label:"Upper B", focus:"Peito · Costas · Ombro · Braço — ênfase vertical/largura", ex:[
-    {n:"Desenvolvimento com halteres (sentado)",s:"4",r:"8–10",rest:"2min",tip:"Mais amigável ao ombro que a barra; cada braço se move livre no ângulo natural. Desça até a altura das orelhas."},
-    {n:"Puxada alta frontal aberta (ou barra fixa assistida)",s:"4",r:"8–12",rest:"2min",tip:"Foco em largura (dorsais). Estique total em cima, sem balançar."},
-    {n:"Supino reto com halteres",s:"3",r:"10–12",rest:"90s",tip:"Complementa o peito do D1 num ângulo plano. Amplitude total, descida controlada."},
-    {n:"Remada na máquina ou na ponta (pegada neutra)",s:"3",r:"10–12",rest:"90s",tip:"Espessura do meio das costas. Deixe os braços esticarem à frente p/ alongar."},
-    {n:"Elevação lateral (outra variação: cabo unilateral)",s:"4",r:"12–20",rest:"60s",tip:"Mais volume p/ ombros, o grupo que mais define a silhueta em V."},
-    {n:"Rosca martelo ou rosca cabo",s:"3",r:"10–12",rest:"60s",tip:"Pega neutra trabalha braquial e antebraço, engrossando o braço."},
-    {n:"Tríceps na polia (corda) + parciais no alongamento",s:"3",r:"12–15",rest:"60s",tip:"Ao falhar, faça 2–3 parciais na parte alongada — técnica com forte respaldo p/ hipertrofia."},
-  ]},
-  { day:"D4", label:"Lower B", focus:"Pernas — ênfase posterior & glúteo", ex:[
-    {n:"Mesa flexora sentada",s:"4",r:"10–15",rest:"90s",tip:"Isolamento direto do isquiotibial e o melhor alongamento da máquina sentada = forte estímulo de crescimento. Movimento principal de posterior hoje."},
-    {n:"Mesa flexora deitada",s:"3",r:"10–15",rest:"75s",tip:"Outra variação de flexora pega o posterior num ângulo diferente; some volume sem terra nem dobradiça de quadril."},
-    {n:"Cadeira abdutora",s:"3",r:"12–20",rest:"60s",tip:"Glúteo médio e máximo, sentado. Incline o tronco levemente à frente p/ recrutar mais glúteo."},
-    {n:"Leg press com pés altos",s:"4",r:"10–12",rest:"2min",tip:"Pés altos na plataforma joga a ênfase p/ glúteo e posterior. Desça fundo p/ alongar."},
-    {n:"Panturrilha sentado",s:"4",r:"15–20",rest:"45s",tip:"Trabalha o sóleo; pausa no alongamento. Complementa a versão em pé do D2."},
-    {n:"Prancha / abdominal infra",s:"3",r:"40–60s",rest:"45s",tip:"Core e estabilidade do tronco, importante p/ os agachamentos e pressões."},
-  ]},
-];
+/* ===================== MOTOR DE GERAÇÃO DE TREINO ===================== */
+/* Base científica:
+   - Volume: 10–20 séries/músculo/semana (Schoenfeld 2017); inic ~10, interm ~14, avanç ~18.
+   - Frequência: cada grupo ≥2×/sem (Schoenfeld 2016/2019); divisão escolhida pela frequência.
+   - Reps/carga/descanso por objetivo (ACSM 2026 Position Stand / repetition continuum):
+       força 3–6 reps / 2–4min; hipertrofia 8–12 / 60–90s; resistência 15–20 / 30–60s.
+   - Experiência define nº de exercícios e proximidade da falha. */
+
+const EXDB = {
+  chest: [
+    {n:"Supino reto com halteres", comp:1, tier:1, best:1, tip:"Amplitude maior que a barra e seguro p/ falhar."},
+    {n:"Supino inclinado com halteres (30–45°)", comp:1, tier:1, tip:"Ênfase no peitoral superior; desça bem fundo."},
+    {n:"Supino reto na máquina / Smith", comp:1, tier:1, best:1, tip:"Estável e fácil de aprender."},
+    {n:"Crucifixo na máquina (peck-deck)", comp:0, tier:3, tip:"Tensão máxima no peito alongado; pausa 1s."},
+    {n:"Cross-over na polia", comp:0, tier:3, tip:"Boa tensão na posição alongada."},
+    {n:"Flexão de braço", comp:1, tier:2, best:1, tip:"Ótima sem equipamento; corpo reto."},
+  ],
+  back: [
+    {n:"Puxada alta frontal aberta", comp:1, tier:1, best:1, tip:"Foco em largura (dorsais). Estique total em cima."},
+    {n:"Barra fixa (assistida se preciso)", comp:1, tier:1, tip:"Padrão-ouro de puxada vertical."},
+    {n:"Remada curvada com barra", comp:1, tier:1, tip:"Espessura das costas; mantenha a lombar neutra."},
+    {n:"Remada serrote com halter", comp:1, tier:1, best:1, tip:"Unilateral; forte na posição alongada."},
+    {n:"Remada na máquina (pegada neutra)", comp:1, tier:2, best:1, tip:"Estável; deixe os braços esticarem à frente."},
+    {n:"Puxada com pegada neutra", comp:1, tier:2, tip:"Mais confortável p/ ombro/cotovelo."},
+  ],
+  quads: [
+    {n:"Agachamento livre", comp:1, tier:1, tip:"Grande construtor de quadríceps; exige técnica."},
+    {n:"Hack squat / Agachamento no Smith", comp:1, tier:1, best:1, tip:"Permite ir fundo com segurança."},
+    {n:"Leg press 45°", comp:1, tier:1, best:1, tip:"Alta carga sem risco lombar; desça profundo."},
+    {n:"Cadeira extensora", comp:0, tier:3, best:1, tip:"Isolamento direto; encoste-se p/ alongar o reto femoral."},
+    {n:"Afundo / Passada com halteres", comp:1, tier:2, tip:"Unilateral; estabilidade e glúteo."},
+  ],
+  hams: [
+    {n:"Mesa flexora sentada", comp:0, tier:1, best:1, tip:"Melhor alongamento do isquiotibial; forte estímulo."},
+    {n:"Mesa flexora deitada", comp:0, tier:2, best:1, tip:"Pega o posterior em outro ângulo."},
+    {n:"Levantamento terra romeno (RDL)", comp:1, tier:1, tip:"Dobradiça de quadril; ótimo p/ posterior e glúteo."},
+    {n:"Stiff com halteres", comp:1, tier:2, tip:"Variação de dobradiça; controle a descida."},
+  ],
+  glutes: [
+    {n:"Elevação pélvica (hip thrust)", comp:1, tier:1, best:1, tip:"Maior ativação de glúteo; pausa 1s no topo."},
+    {n:"Cadeira abdutora", comp:0, tier:3, best:1, tip:"Glúteo médio; incline o tronco à frente."},
+    {n:"Leg press com pés altos", comp:1, tier:2, tip:"Ênfase em glúteo e posterior; desça fundo."},
+  ],
+  shoulders: [
+    {n:"Desenvolvimento com halteres (sentado)", comp:1, tier:1, best:1, tip:"Amigável ao ombro; desça até a altura das orelhas."},
+    {n:"Desenvolvimento na máquina", comp:1, tier:1, best:1, tip:"Estável e fácil de aprender."},
+    {n:"Elevação lateral (halter ou cabo)", comp:0, tier:2, best:1, tip:"Deltoide medial = largura dos ombros."},
+    {n:"Elevação lateral no cabo (unilateral)", comp:0, tier:3, tip:"Tensão melhor na posição alongada."},
+  ],
+  biceps: [
+    {n:"Rosca direta com barra/halteres", comp:0, tier:2, best:1, tip:"Básico e eficaz; sem balançar."},
+    {n:"Rosca inclinada com halteres", comp:0, tier:2, tip:"Bíceps alongado atrás do corpo."},
+    {n:"Rosca martelo", comp:0, tier:3, best:1, tip:"Pega neutra; braquial e antebraço."},
+  ],
+  triceps: [
+    {n:"Tríceps na polia (corda)", comp:0, tier:2, best:1, tip:"Fácil de progredir; parciais no alongamento ao falhar."},
+    {n:"Extensão por cima da cabeça (cabo)", comp:0, tier:2, tip:"Alonga a cabeça longa do tríceps."},
+    {n:"Tríceps testa / francês", comp:0, tier:3, tip:"Bom alongamento; controle o movimento."},
+    {n:"Mergulho entre bancos / paralelas", comp:1, tier:2, best:1, tip:"Composto de empurrar; bom p/ massa."},
+  ],
+  calves: [
+    {n:"Panturrilha em pé", comp:0, tier:2, best:1, tip:"Gastrocnêmio; pausa 1–2s no alongamento."},
+    {n:"Panturrilha sentado", comp:0, tier:2, tip:"Sóleo; reps mais altas funcionam bem."},
+  ],
+  abs: [
+    {n:"Abdominal na polia (crunch)", comp:0, tier:2, best:1, tip:"Adicione carga progressiva."},
+    {n:"Elevação de pernas", comp:0, tier:2, best:1, tip:"Infra do abdômen; controle a descida."},
+    {n:"Prancha", comp:0, tier:3, best:1, tip:"Estabilidade do core; segure firme."},
+  ],
+};
+
+const GOAL_PARAMS = {
+  strength:  {r:"3–6",  rest:"2–4min", label:"Força",       setMult:0.85, maxSets:5, note:"Cargas altas (~85% 1RM), foco em compostos pesados."},
+  hyper:     {r:"8–12", rest:"60–90s", label:"Hipertrofia", setMult:1.0,  maxSets:4, note:"Cargas moderadas (70–80% 1RM), 1–2 reps na reserva."},
+  endurance: {r:"15–20",rest:"30–60s", label:"Resistência", setMult:0.85, maxSets:4, note:"Cargas leves (<60% 1RM), descanso curto."},
+  general:   {r:"8–15", rest:"60–90s", label:"Cond. geral", setMult:0.9,  maxSets:4, note:"Faixa ampla, equilíbrio entre força e resistência."},
+};
+
+const EXP_PARAMS = {
+  beginner:     {label:"Iniciante",    weeklySets:10, exPerBigMuscle:1, exPerSmall:1, onlyBest:true,  rir:"2–3"},
+  intermediate: {label:"Intermediário",weeklySets:14, exPerBigMuscle:2, exPerSmall:1, onlyBest:false, rir:"1–2"},
+  advanced:     {label:"Avançado",     weeklySets:18, exPerBigMuscle:2, exPerSmall:2, onlyBest:false, rir:"0–2"},
+};
+
+const SPLITS = {
+  2: { name:"Full Body (corpo inteiro)", days:[
+        {label:"Full Body A", g:["chest","back","quads","shoulders","biceps","abs"]},
+        {label:"Full Body B", g:["back","hams","chest","shoulders","triceps","calves"]},
+     ], note:"2× corpo inteiro: cada grupo treinado 2×/sem, ideal p/ baixa frequência. Dias: ex. Seg e Qui.", dias:"Seg · Qui" },
+  3: { name:"Full Body (corpo inteiro)", days:[
+        {label:"Full Body A", g:["chest","back","quads","shoulders","biceps","abs"]},
+        {label:"Full Body B", g:["back","hams","shoulders","triceps","calves","abs"]},
+        {label:"Full Body C", g:["chest","quads","back","glutes","biceps","triceps"]},
+     ], note:"3× corpo inteiro: alta frequência por grupo, a melhor escolha p/ iniciantes (mais prática técnica). Dias: Seg · Qua · Sex.", dias:"Seg · Qua · Sex" },
+  4: { name:"Upper / Lower", days:[
+        {label:"Upper A", g:["chest","back","shoulders","biceps","triceps"]},
+        {label:"Lower A", g:["quads","hams","glutes","calves","abs"]},
+        {label:"Upper B", g:["back","chest","shoulders","triceps","biceps"]},
+        {label:"Lower B", g:["hams","quads","glutes","calves","abs"]},
+     ], note:"Upper/Lower: cada grupo 2×/sem com 48–72h de recuperação, a melhor escolha em 4 dias. Dias: Seg · Ter · (folga) · Qui · Sex.", dias:"Seg · Ter · Qui · Sex" },
+  5: { name:"Upper / Lower + Push / Pull / Legs", days:[
+        {label:"Upper", g:["chest","back","shoulders","biceps","triceps"]},
+        {label:"Lower", g:["quads","hams","glutes","calves","abs"]},
+        {label:"Push",  g:["chest","shoulders","triceps"]},
+        {label:"Pull",  g:["back","biceps","abs"]},
+        {label:"Legs",  g:["quads","hams","glutes","calves"]},
+     ], note:"Híbrido 5 dias: combina a frequência do Upper/Lower com volume extra do PPL. Dias: Seg a Sex.", dias:"Seg a Sex" },
+  6: { name:"Push / Pull / Legs (2×)", days:[
+        {label:"Push A", g:["chest","shoulders","triceps"]},
+        {label:"Pull A", g:["back","biceps","abs"]},
+        {label:"Legs A", g:["quads","hams","glutes","calves"]},
+        {label:"Push B", g:["shoulders","chest","triceps"]},
+        {label:"Pull B", g:["back","biceps","abs"]},
+        {label:"Legs B", g:["hams","quads","glutes","calves"]},
+     ], note:"PPL 6 dias: cada grupo 2×/sem com alto volume; p/ avançados com boa recuperação. Dias: Seg a Sáb.", dias:"Seg a Sáb" },
+};
+
+const BIG = ["chest","back","quads","hams","glutes"];
+const FOCUS_LABEL = {
+  chest:"Peito", back:"Costas", quads:"Quadríceps", hams:"Posterior",
+  glutes:"Glúteo", shoulders:"Ombro", biceps:"Bíceps", triceps:"Tríceps",
+  calves:"Panturrilha", abs:"Abdômen",
+};
+
+function pickExercises(group, exp, usedNames, groupsInDay){
+  const lib = EXDB[group];
+  const isBig = BIG.includes(group);
+  let nWanted = isBig ? exp.exPerBigMuscle : exp.exPerSmall;
+  if(groupsInDay >= 6) nWanted = 1;
+  else if(groupsInDay === 5 && !isBig) nWanted = 1;
+  let pool = lib.filter(e => exp.onlyBest ? e.best : true);
+  if(pool.length===0) pool = lib.slice();
+  pool = pool.slice().sort((a,b)=> (b.comp-a.comp) || (a.tier-b.tier));
+  const chosen = [];
+  for(const e of pool){
+    if(chosen.length>=nWanted) break;
+    if(usedNames.has(e.n)) continue;
+    chosen.push(e); usedNames.add(e.n);
+  }
+  let i=0;
+  while(chosen.length<nWanted && i<pool.length){
+    if(!chosen.includes(pool[i])){ chosen.push(pool[i]); }
+    i++;
+  }
+  return chosen;
+}
+
+function setsPerExercise(group, exp, goalP, freqOfGroupInWeek, exCountThisDay){
+  const isBig = BIG.includes(group);
+  let weekly = exp.weeklySets * (isBig?1:0.7);
+  weekly *= goalP.setMult;
+  let perSession = weekly / Math.max(freqOfGroupInWeek,1);
+  let per = perSession / Math.max(exCountThisDay,1);
+  let s = Math.round(per);
+  let cap = goalP.maxSets;
+  if(freqOfGroupInWeek <= 2 && exCountThisDay === 1) cap = goalP.maxSets + 1;
+  s = Math.max(2, Math.min(cap, s));
+  return s;
+}
+
+function groupFrequency(days){
+  const f = {};
+  days.forEach(d=> d.g.forEach(g=> f[g]=(f[g]||0)+1));
+  return f;
+}
+
+function buildPlan(freq, goal, expKey){
+  const split = SPLITS[freq];
+  const goalP = GOAL_PARAMS[goal] || GOAL_PARAMS.general;
+  const exp = EXP_PARAMS[expKey] || EXP_PARAMS.intermediate;
+  const gfreq = groupFrequency(split.days);
+  const plan = split.days.map((day, di)=>{
+    const usedNames = new Set();
+    const groupsInDay = day.g.length;
+    const groupsEx = day.g.map(g=> ({g, exs: pickExercises(g, exp, usedNames, groupsInDay)}));
+    const ex = [];
+    groupsEx.forEach(({g, exs})=>{
+      exs.forEach(e=>{
+        const s = setsPerExercise(g, exp, goalP, gfreq[g], exs.length);
+        ex.push({ n:e.n, s:String(s), r:goalP.r, rest:goalP.rest, tip:e.tip });
+      });
+    });
+    const focus = day.g.map(g=>FOCUS_LABEL[g]).filter((v,i,a)=>a.indexOf(v)===i).join(" · ");
+    return { day:"D"+(di+1), label:day.label, focus:focus, ex:ex };
+  });
+  return {plan, split:split.name, splitNote:split.note, dias:split.dias, goalP, exp, freq};
+}
 
 /* ===================== NUTRIÇÃO ===================== */
-/* Cálculo: Mifflin-St Jeor, homem 18a 56kg 166cm. TMB ≈ 1480. Atividade moderada (treino 4x) x1.5 ≈ 2220.
-   Superávit leve p/ ganho magro: +350 → ~2570 kcal.
-   Proteína 2.0 g/kg = 112g (448kcal). Gordura ~0.9 g/kg = 50g (450kcal). Carbo = restante = ~418g.
-   Arredondado para metas redondas. */
-const GOAL = { kcal:2570, p:120, c:420, f:55 };
+/* META DINÂMICA — calculada a partir do perfil do usuário (calculadora abaixo).
+   Energia: equação de Mifflin-St Jeor (TMB) × fator de atividade = TDEE.
+     Homem: TMB = 10·peso + 6,25·altura − 5·idade + 5
+     Mulher: TMB = 10·peso + 6,25·altura − 5·idade − 161
+   Ajuste por objetivo: ganhar +12% (superávit leve, ~0,2–0,4kg/sem),
+     manter = TDEE, perder −20% (déficit moderado que preserva massa).
+   Proteína (g/kg de peso), respaldo Morton 2017 / ISSN 2017:
+     ganhar 2,0 · manter 1,8 · perder 2,2 (mais alta no cut p/ preservar músculo).
+   Gordura: 25% das calorias (faixa 20–30% da literatura), mín. 0,8 g/kg.
+   Carboidrato: calorias restantes ÷ 4. */
+const DEF_GOAL = { kcal:2570, p:120, c:420, f:55 };
 
 /* Banco de alimentos: valores por 100g (ovo por unidade ~50g já embutido). */
 const FOODS = [
@@ -380,22 +680,22 @@ const FOODS = [
   {n:"Salada de folhas + tomate", k:20, p:1, c:4, f:0.2},
 ];
 
-const MEALS = [
-  {h:"Café da manhã", l:"3 ovos + 4 claras · 80g aveia c/ leite · 1 banana · 1 col pasta de amendoim"},
-  {h:"Almoço", l:"150g frango · 150g arroz · 100g feijão · brócolis à vontade · 1 col azeite"},
-  {h:"Pré-treino (lanche)", l:"1 scoop whey · 1 tapioca média · 1 fruta"},
-  {h:"Pós-treino / jantar", l:"180g carne ou peixe · 200g batata doce · salada · azeite"},
-  {h:"Ceia", l:"1 iogurte natural · 30g castanhas · ou whey c/ leite"},
-];
+/* (cardápio modelo agora é MEALS_BASE, dimensionado dinamicamente — ver abaixo) */
 
 /* ===================== ESTADO / STORAGE ===================== */
 const KEY = "forja_v1";
 let DB = load();
+let GOAL = (DB.goal) ? DB.goal : {...DEF_GOAL};
+let PROFILE = DB.profile || null;
+/* PLAN ativo: vem do treino salvo ou de um padrão (4d / hipertrofia / intermediário). */
+let TRAINCFG = (DB.train && DB.train.cfg) ? DB.train.cfg : {freq:4, goal:"hyper", exp:"intermediate"};
+let PLAN = (DB.train && DB.train.plan) ? DB.train.plan
+           : buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp).plan;
 function load(){
   try{ return JSON.parse(localStorage.getItem(KEY)) || fresh(); }
   catch(e){ return fresh(); }
 }
-function fresh(){ return { sets:{}, daysDone:{}, calendar:{}, food:{} }; }
+function fresh(){ return { sets:{}, daysDone:{}, calendar:{}, food:{}, goal:null, profile:null, train:null, collapsed:{train:false, diet:false} }; }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 function todayKey(){ const d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
 
@@ -406,6 +706,44 @@ function go(p){
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.p===p));
   if(p==='cal') renderCal();
   window.scrollTo(0,0);
+}
+
+/* ===================== CARDS RECOLHÍVEIS ===================== */
+function applyCollapse(which){
+  const map = {train:{card:'trainCard'}, diet:{card:'dietCard'}};
+  const card = document.getElementById(map[which].card);
+  if(!card) return;
+  const collapsed = !!(DB.collapsed && DB.collapsed[which]);
+  card.classList.toggle('collapsed', collapsed);
+  if(which==='train') updateTrainSummary();
+  else updateDietSummary();
+}
+function toggleCard(which){
+  if(!DB.collapsed) DB.collapsed = {train:false, diet:false};
+  DB.collapsed[which] = !DB.collapsed[which];
+  save();
+  applyCollapse(which);
+}
+function collapseCard(which, val){
+  if(!DB.collapsed) DB.collapsed = {train:false, diet:false};
+  DB.collapsed[which] = val;
+  save();
+  applyCollapse(which);
+}
+function updateTrainSummary(){
+  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp);
+  const el = document.getElementById('trainSummary');
+  if(el) el.textContent = `${built.split} · ${built.goalP.label} · ${TRAINCFG.freq}×/sem`;
+}
+function updateDietSummary(){
+  const el = document.getElementById('dietSummary');
+  if(!el) return;
+  if(PROFILE){
+    const goalLbl = {gain:"ganho de massa", keep:"manutenção", lose:"perda de gordura"}[PROFILE.goal] || "";
+    el.textContent = `${GOAL.kcal} kcal · ${goalLbl}`;
+  } else {
+    el.textContent = "";
+  }
 }
 
 /* ===================== TREINO ===================== */
@@ -458,8 +796,55 @@ function toggleDayDone(){
   }
   save(); renderDay(); renderDaySel();
 }
-document.getElementById('trainNote').innerHTML =
-  "<b>Por que esses exercícios:</b> priorizam carga na posição alongada do músculo (o principal motor da hipertrofia segundo a pesquisa recente) e variações halteres/máquina/cabo, que dão estímulo igual ou melhor que a barra reta com menos estresse no ombro e maior segurança ao falhar. <b>Progressão:</b> some carga ou 1 rep ao bater o topo da faixa em todas as séries, com boa forma, deixando 1–2 reps na reserva. A cada 5–6 semanas, faça uma semana leve (deload, ~60% das séries).";
+
+/* ---- Geração de treino sob medida ---- */
+function generatePlan(){
+  const freq = parseInt(document.getElementById('inFreq').value);
+  const goal = document.getElementById('inObj').value;
+  const exp  = document.getElementById('inExp').value;
+  const built = buildPlan(freq, goal, exp);
+  PLAN = built.plan;
+  TRAINCFG = {freq, goal, exp};
+  DB.train = { cfg:TRAINCFG, plan:PLAN };
+  // limpa marcações de séries antigas (exercícios mudaram)
+  DB.sets = {};
+  save();
+  curDay = 0;
+  renderDaySel(); renderDay(); renderTrainInfo(); renderCal();
+  collapseCard('train', true);   // recolhe após montar
+}
+
+function fillTrainForm(){
+  document.getElementById('inFreq').value = String(TRAINCFG.freq);
+  document.getElementById('inObj').value = TRAINCFG.goal;
+  document.getElementById('inExp').value = TRAINCFG.exp;
+}
+
+function renderTrainInfo(){
+  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp);
+  const dayNames = {
+    2:"dois dias com folga entre eles (ex.: Seg e Qui)",
+    3:"em dias alternados (Seg · Qua · Sex), deixando descanso entre as sessões",
+    4:"Seg · Ter · (folga) · Qui · Sex — nunca dois treinos do mesmo segmento colados",
+    5:"de Seg a Sex, com o fim de semana de descanso",
+    6:"de Seg a Sáb, com um dia de descanso",
+  }[TRAINCFG.freq];
+  // subtítulo
+  document.getElementById('trainSub').innerHTML =
+    `Divisão <b style="color:var(--txt)">${built.split}</b> · objetivo <b style="color:var(--txt)">${built.goalP.label}</b> · nível <b style="color:var(--txt)">${built.exp.label}</b>. Toque para marcar séries e conclua o dia.`;
+  // método/nota científica
+  const note = document.getElementById('planMethod');
+  note.style.display='block';
+  note.innerHTML =
+    `<b>Como este treino foi montado:</b> ${built.splitNote} ` +
+    `Cada grupo grande recebe ~${built.exp.weeklySets} séries/semana (faixa de respaldo científico: 10–20 séries/músculo/semana, treinado ≥2×/sem). ` +
+    `Para <b>${built.goalP.label.toLowerCase()}</b>: ${built.goalP.note} Faixa de ${built.goalP.r} repetições, descanso de ${built.goalP.rest}, deixando ${built.exp.rir} reps na reserva (RIR). ` +
+    `<b>Melhores dias:</b> treine ${dayNames}.`;
+  // nota de rodapé (progressão)
+  document.getElementById('trainNote').innerHTML =
+    "<b>Progressão:</b> some carga ou 1 repetição quando bater o topo da faixa em todas as séries, com boa forma. A cada 5–6 semanas, faça uma semana leve (deload, ~60% das séries) para recuperar. " +
+    "<b>Por que estes exercícios:</b> priorizam compostos primeiro (mais carga e estímulo) e variações halteres/máquina/cabo, seguras ao falhar e eficazes na posição alongada do músculo. Refaça o treino acima sempre que mudar de objetivo ou evoluir de nível.";
+}
 
 /* ===================== CALENDÁRIO ===================== */
 let calDate = new Date();
@@ -486,8 +871,10 @@ function renderCal(){
   }
   // stats (do mês exibido)
   document.getElementById('stWent').textContent=went;
-  const weeks = Math.round(days/7);
-  document.getElementById('stGoal').textContent = weeks*4;
+  const freq = (TRAINCFG && TRAINCFG.freq) ? TRAINCFG.freq : 4;
+  const weeks = days/7;
+  document.getElementById('stGoal').textContent = Math.round(weeks*freq);
+  document.getElementById('stGoalLabel').textContent = "Meta ("+freq+"×/sem)";
   document.getElementById('stStreak').textContent = streak();
 }
 function cycleDay(key){
@@ -578,18 +965,114 @@ function renderDiet(){
       </div>`;
     });
   }
+  updateDietNote();
 }
 function setBar(id,now,goal){
   document.getElementById(id+'Now').textContent=now;
   document.getElementById(id+'Goal').textContent=goal;
   document.getElementById(id+'Fill').style.width=Math.min(now/goal*100,100)+"%";
 }
+/* Cardápio modelo BASE, dimensionado para ~2570 kcal (P120/C420/G55).
+   Ao calcular nova meta, as porções são reescaladas proporcionalmente. */
+const MEALS_BASE = [
+  {h:"Café da manhã", l:"{eggs} ovos + {whites} claras · {oats}g aveia c/ leite · 1 banana · 1 col pasta de amendoim"},
+  {h:"Almoço", l:"{lunchP}g frango · {lunchR}g arroz · 100g feijão · brócolis à vontade · 1 col azeite"},
+  {h:"Pré-treino (lanche)", l:"1 scoop whey · {tap}g tapioca · 1 fruta"},
+  {h:"Pós-treino / jantar", l:"{dinP}g carne ou peixe · {sweet}g batata doce · salada · azeite"},
+  {h:"Ceia", l:"1 iogurte natural · {nuts}g castanhas · ou whey c/ leite"},
+];
+
+function calcGoal(){
+  const sex=document.getElementById('inSex').value;
+  const age=parseFloat(document.getElementById('inAge').value);
+  const w=parseFloat(document.getElementById('inWeight').value);
+  const h=parseFloat(document.getElementById('inHeight').value);
+  const act=parseFloat(document.getElementById('inAct').value);
+  const goal=document.getElementById('inGoal').value;
+  if(!age||!w||!h){ alert("Preencha idade, peso e altura."); return; }
+
+  // Mifflin-St Jeor
+  let bmr = 10*w + 6.25*h - 5*age + (sex==="m" ? 5 : -161);
+  let tdee = bmr*act;
+
+  // Ajuste por objetivo
+  let kcal, pPerKg;
+  if(goal==="gain"){ kcal = tdee*1.12; pPerKg = 2.0; }
+  else if(goal==="lose"){ kcal = tdee*0.80; pPerKg = 2.2; }
+  else { kcal = tdee; pPerKg = 1.8; }
+
+  // Macros
+  let p = pPerKg * w;                         // proteína (g)
+  let fKcal = kcal * 0.25;                     // 25% das kcal p/ gordura
+  let f = Math.max(fKcal/9, 0.8*w);            // piso de 0,8 g/kg
+  let cKcal = kcal - (p*4) - (f*9);            // resto p/ carbo
+  let c = Math.max(cKcal/4, 0);
+
+  GOAL = { kcal:Math.round(kcal/10)*10, p:Math.round(p), c:Math.round(c), f:Math.round(f) };
+  PROFILE = {sex,age,w,h,act,goal};
+  DB.goal=GOAL; DB.profile=PROFILE; save();
+
+  renderCalcOut(); renderDiet(); renderMeals();
+  collapseCard('diet', true);   // recolhe após calcular
+}
+
+function renderCalcOut(){
+  const goalLbl = {gain:"ganho de massa", keep:"manutenção", lose:"perda de gordura"}[PROFILE?.goal] || "—";
+  const out=document.getElementById('calcOut');
+  out.classList.add('show');
+  out.innerHTML = `
+    <div class="co-kcal"><div class="v">${GOAL.kcal}</div><div class="l">kcal / dia · ${goalLbl}</div></div>
+    <div class="co-macros">
+      <div class="cm p"><div class="cmv">${GOAL.p}g</div><div class="cml">Proteína</div></div>
+      <div class="cm c"><div class="cmv">${GOAL.c}g</div><div class="cml">Carbo</div></div>
+      <div class="cm f"><div class="cmv">${GOAL.f}g</div><div class="cml">Gordura</div></div>
+    </div>`;
+  const m=document.getElementById('calcMethod');
+  m.style.display='block';
+  const pk = PROFILE ? (GOAL.p/PROFILE.w).toFixed(1) : "—";
+  m.innerHTML = `<b>Como foi calculado:</b> gasto energético pela equação de Mifflin-St Jeor (padrão clínico) × seu nível de atividade. ${PROFILE?.goal==="gain"?"Superávit de ~12% para ganho magro (~0,2–0,4 kg/semana).":PROFILE?.goal==="lose"?"Déficit de 20% para perda de gordura preservando músculo.":"Calorias na manutenção."} Proteína em <b>${pk} g/kg</b> (faixa de respaldo científico para ${PROFILE?.goal==="lose"?"preservar massa em déficit":"hipertrofia"}: 1,6–2,2 g/kg), gordura em 25% das calorias e o restante em carboidrato. Pese-se semanalmente e ajuste ±150 kcal conforme o resultado real.`;
+}
+
+function fillProfileForm(){
+  if(!PROFILE) return;
+  document.getElementById('inSex').value=PROFILE.sex;
+  document.getElementById('inAge').value=PROFILE.age;
+  document.getElementById('inWeight').value=PROFILE.w;
+  document.getElementById('inHeight').value=PROFILE.h;
+  document.getElementById('inAct').value=PROFILE.act;
+  document.getElementById('inGoal').value=PROFILE.goal;
+  renderCalcOut();
+}
+
 function renderMeals(){
   const el=document.getElementById('mealPlan'); el.innerHTML='';
-  MEALS.forEach(m=>{ el.innerHTML+=`<div class="meal-suggest"><div class="mh">${m.h}</div><div class="ml">${m.l}</div></div>`; });
+  // escala em relação à base (2570 kcal)
+  const s = GOAL.kcal / 2570;
+  const r = (base,step)=> Math.max(step, Math.round(base*s/step)*step);
+  const vals = {
+    eggs: Math.max(2, Math.round(3*s)),
+    whites: Math.max(2, Math.round(4*s)),
+    oats: r(80,10),
+    lunchP: r(150,10), lunchR: r(150,10),
+    tap: r(60,10),
+    dinP: r(180,10), sweet: r(200,20),
+    nuts: r(30,5),
+  };
+  MEALS_BASE.forEach(m=>{
+    let l=m.l;
+    Object.keys(vals).forEach(k=> l=l.replace("{"+k+"}", vals[k]));
+    el.innerHTML+=`<div class="meal-suggest"><div class="mh">${m.h}</div><div class="ml">${l}</div></div>`;
+  });
 }
-document.getElementById('dietNote').innerHTML =
-  "<b>Meta:</b> ~2570 kcal/dia para ganho de massa magro (superávit leve), com 120g de proteína (~2,1g/kg) — faixa ideal para hipertrofia. Pese-se semanalmente: ganho de 0,2–0,4kg/semana é o ritmo certo. Se subir rápido demais (gordura), reduza ~150 kcal de carbo; se estagnar, adicione ~150 kcal.";
+function updateDietNote(){
+  const note=document.getElementById('dietNote');
+  if(!PROFILE){
+    note.innerHTML = "<b>Preencha seu perfil acima</b> para gerar uma meta personalizada. Enquanto isso, mostramos uma meta padrão de exemplo. O cardápio modelo abaixo se ajusta automaticamente quando você calcular.";
+  } else {
+    const pk=(GOAL.p/PROFILE.w).toFixed(1);
+    note.innerHTML = `<b>Sua meta:</b> ~${GOAL.kcal} kcal/dia com ${GOAL.p}g de proteína (${pk} g/kg), ${GOAL.c}g de carbo e ${GOAL.f}g de gordura. Pese-se semanalmente: ${PROFILE.goal==="gain"?"ganho de 0,2–0,4 kg/semana é o ritmo certo; se subir gordura rápido, corte ~150 kcal de carbo":PROFILE.goal==="lose"?"perda de 0,3–0,7 kg/semana é saudável; se travar, corte ~150 kcal":"oscilação mínima é o esperado"}. Recalcule o perfil sempre que seu peso mudar bastante.`;
+  }
+}
 
 function resetToday(){
   if(!confirm("Zerar o registro alimentar de hoje?")) return;
@@ -597,14 +1080,33 @@ function resetToday(){
 }
 function hardReset(){
   if(!confirm("Apagar TODOS os dados (treinos, calendário, dieta)? Não dá pra desfazer.")) return;
-  DB=fresh(); save(); renderDaySel(); renderDay(); renderDiet(); renderCal();
+  DB=fresh(); GOAL={...DEF_GOAL}; PROFILE=null; save();
+  TRAINCFG = {freq:4, goal:"hyper", exp:"intermediate"};
+  PLAN = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp).plan;
+  document.getElementById('calcOut').classList.remove('show');
+  document.getElementById('calcMethod').style.display='none';
+  ['inAge','inWeight','inHeight'].forEach(id=>document.getElementById(id).value='');
+  fillTrainForm(); fillProfileForm();
+  curDay=0;
+  renderDaySel(); renderDay(); renderTrainInfo(); renderMeals(); renderDiet(); renderCal();
+  applyCollapse('train'); applyCollapse('diet');   // reabre (fresh tem collapsed=false)
 }
 
 /* ===================== INIT ===================== */
 initFoodSel(); onFoodSel();
-renderDaySel(); renderDay();
+fillTrainForm();
+renderDaySel(); renderDay(); renderTrainInfo();
+fillProfileForm();
 renderMeals(); renderDiet();
 renderCal();
+
+/* Estado de recolhimento dos cards de configuração.
+   Se já há treino salvo, começa recolhido (mesmo p/ dados antigos sem o campo). */
+if(!DB.collapsed) DB.collapsed = {train:false, diet:false};
+if(DB.train) DB.collapsed.train = true;     // treino já montado → recolhido
+if(PROFILE)  DB.collapsed.diet = true;       // dieta já calculada → recolhido
+applyCollapse('train');
+applyCollapse('diet');
 </script>
 </body>
 </html>
