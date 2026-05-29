@@ -105,6 +105,17 @@ main{padding:18px}
 .ex-meta{font-size:11px;color:var(--mut);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 10px}
 .ex-meta span{display:inline-flex;align-items:center;gap:3px}
 .ex-meta b{color:var(--acc2);font-weight:600}
+/* REGISTRO DE PESO */
+.ex-weight{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.w-input{display:inline-flex;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.w-input input{width:62px;border:none;background:transparent;color:var(--txt);font-family:'Sora';font-size:15px;font-weight:700;text-align:center;padding:8px 2px;-moz-appearance:textfield}
+.w-input input::-webkit-outer-spin-button,.w-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.w-input input:focus{outline:none}
+.w-step{border:none;background:transparent;color:var(--acc2);font-size:20px;font-weight:700;width:36px;height:38px;cursor:pointer;line-height:1;transition:.15s}
+.w-step:active{background:rgba(255,176,32,.15)}
+.w-last{font-size:11px;color:var(--mut)}
+.w-last b{color:var(--grn);font-weight:700}
+.w-none{color:var(--acc2);opacity:.8}
 .ex-tip{font-size:10.5px;color:var(--mut);margin-top:5px;font-style:italic;opacity:.85;line-height:1.4}
 
 .chk{
@@ -183,6 +194,58 @@ main{padding:18px}
 .meal-suggest .mh{font-family:'Bebas Neue';font-size:14px;letter-spacing:1px;color:var(--acc2);margin-bottom:5px}
 .meal-suggest .ml{font-size:11.5px;color:var(--mut);line-height:1.6}
 
+/* DIETA MONTADA */
+.di-meal{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px}
+.di-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.di-mname{font-family:'Bebas Neue';font-size:16px;letter-spacing:1px;color:var(--acc2)}
+.di-mtot{font-size:10px;color:var(--mut)}
+.di-item{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-top:1px solid var(--line)}
+.di-item:first-of-type{border-top:none}
+.di-info{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.di-check{width:24px;height:24px;border:2px solid var(--line);border-radius:8px;flex-shrink:0;margin-top:1px;cursor:pointer;transition:.15s;position:relative}
+.di-check:active{transform:scale(.9)}
+.di-check.on{background:linear-gradient(135deg,var(--grn),#10b981);border-color:transparent}
+.di-check.on::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#06210f;font-size:14px;font-weight:800}
+.di-eaten .di-name{color:var(--grn);text-decoration:line-through;text-decoration-color:rgba(52,211,153,.5)}
+.di-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.di-row2{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.di-name{font-size:13.5px;font-weight:600;color:var(--txt);line-height:1.3}
+.di-gram{font-size:14px;font-weight:700;color:var(--acc2);white-space:nowrap;flex-shrink:0}
+.di-macros{font-size:10.5px;color:var(--mut)}
+.di-swap{background:var(--bg2);border:1px solid var(--line);color:var(--acc2);
+  font-family:'Sora';font-size:10px;font-weight:600;padding:5px 11px;border-radius:9px;cursor:pointer;transition:.15s;flex-shrink:0;white-space:nowrap}
+.di-swap:active{transform:scale(.95)}
+.di-swap:hover{border-color:var(--acc2)}
+.di-meal-all{width:100%;margin-top:10px;background:transparent;border:1px dashed var(--line);color:var(--mut);
+  font-family:'Sora';font-size:11px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer;transition:.15s}
+.di-meal-all:active{transform:scale(.99)}
+.di-meal-all:hover{border-color:var(--grn);color:var(--grn)}
+.di-meal-done{border-color:rgba(52,211,153,.4)}
+.di-meal-done .di-mname{color:var(--grn)}
+.di-total{background:linear-gradient(135deg,rgba(255,84,54,.1),rgba(255,176,32,.08));border:1px solid var(--line);
+  border-radius:14px;padding:13px;font-size:12.5px;line-height:1.5;margin-top:4px}
+.di-total-sub{font-size:11px;color:var(--mut);margin-top:4px}
+
+/* OVERLAY SWAP */
+.swap-overlay{position:fixed;inset:0;z-index:210;display:none;background:rgba(6,9,14,.82);
+  align-items:flex-end;justify-content:center;animation:fade .25s ease}
+.swap-overlay.show{display:flex}
+.swap-box{width:100%;max-width:460px;background:var(--bg2);border:1px solid var(--line);border-bottom:none;
+  border-radius:20px 20px 0 0;padding:18px 16px 26px;max-height:80vh;overflow-y:auto;animation:slideup .3s ease}
+@keyframes slideup{from{transform:translateY(40px);opacity:.6}to{transform:translateY(0);opacity:1}}
+.swap-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.swap-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:.5px}
+.swap-x{background:none;border:none;color:var(--mut);font-size:18px;cursor:pointer;padding:4px 8px}
+.swap-hint{font-size:11.5px;color:var(--mut);margin:6px 0 14px;line-height:1.5}
+.swap-list{display:flex;flex-direction:column;gap:8px}
+.di-opt{display:flex;flex-direction:column;gap:3px;text-align:left;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:12px 13px;cursor:pointer;transition:.15s;font-family:'Sora'}
+.di-opt:active{transform:scale(.99)}
+.di-opt:hover{border-color:var(--acc2)}
+.di-opt-sel{border-color:var(--acc);background:rgba(255,84,54,.08)}
+.di-opt-n{font-size:13.5px;font-weight:600;color:var(--txt)}
+.di-opt-m{font-size:10.5px;color:var(--mut)}
+
 .note{font-size:11px;color:var(--mut);line-height:1.6;background:var(--bg2);border-left:3px solid var(--acc);padding:11px 13px;border-radius:0 10px 10px 0;margin-top:8px}
 .reset-link{display:block;text-align:center;color:var(--mut);font-size:11px;margin:24px 0 8px;text-decoration:underline;cursor:pointer}
 
@@ -246,6 +309,18 @@ main{padding:18px}
 </head>
 <body>
 
+<!-- ===== OVERLAY DE SUBSTITUIÇÃO DE ALIMENTO ===== -->
+<div class="swap-overlay" id="swapOverlay">
+  <div class="swap-box">
+    <div class="swap-top">
+      <div class="swap-title" id="swapTitle">Trocar alimento</div>
+      <button class="swap-x" onclick="closeSwap()">✕</button>
+    </div>
+    <div class="swap-hint">Escolha um equivalente — a quantidade será recalculada para manter os mesmos macros.</div>
+    <div class="swap-list" id="swapList"></div>
+  </div>
+</div>
+
 <header>
   <div class="brand">
     <div class="logo">T</div>
@@ -271,6 +346,12 @@ main{padding:18px}
       </div>
       <div class="calc-body" id="trainBody">
       <div class="calc-grid">
+        <label class="full">Sexo
+          <select id="inTSex">
+            <option value="m" selected>Masculino</option>
+            <option value="f">Feminino</option>
+          </select>
+        </label>
         <label class="full">Quantos dias por semana você pode treinar?
           <select id="inFreq">
             <option value="2">2 dias</option>
@@ -388,9 +469,25 @@ main{padding:18px}
         </label>
         <label class="full">Objetivo
           <select id="inGoal">
-            <option value="gain">Ganhar massa (superávit leve)</option>
+            <option value="gain_lean">Ganhar massa — leve (mín. gordura)</option>
+            <option value="gain">Ganhar massa — moderado (mais rápido)</option>
             <option value="keep">Manter peso</option>
             <option value="lose">Perder gordura (déficit)</option>
+          </select>
+        </label>
+        <label>Refeições por dia
+          <select id="inMeals">
+            <option value="3">3 refeições</option>
+            <option value="4" selected>4 refeições</option>
+            <option value="5">5 refeições</option>
+            <option value="6">6 refeições</option>
+          </select>
+        </label>
+        <label>Restrição alimentar
+          <select id="inDiet">
+            <option value="0" selected>Onívoro (como tudo)</option>
+            <option value="1">Vegetariano (com ovo/leite)</option>
+            <option value="2">Vegano</option>
           </select>
         </label>
       </div>
@@ -429,8 +526,8 @@ main{padding:18px}
       <div id="foodLog"></div>
     </div>
 
-    <div class="sec-title" style="font-size:20px;margin:24px 0 4px">CARDÁPIO MODELO</div>
-    <div class="sec-sub">Exemplo de dia que bate a meta — use como base e troque equivalentes.</div>
+    <div class="sec-title" style="font-size:20px;margin:24px 0 4px">SUA DIETA</div>
+    <div class="sec-sub">Montada com base TACO para bater sua meta. Toque em <b style="color:var(--txt)">trocar ⇄</b> em qualquer alimento para substituí-lo por um equivalente — a porção é recalculada para manter os macros.</div>
     <div id="mealPlan"></div>
 
     <div class="note" id="dietNote"></div>
@@ -596,15 +693,39 @@ function pickExercises(group, exp, usedNames, groupsInDay){
   return chosen;
 }
 
-function setsPerExercise(group, exp, goalP, freqOfGroupInWeek, exCountThisDay){
+/* Multiplicador de volume por grupo conforme sexo.
+   Mulheres: ênfase prática de trem inferior (glúteo/posterior) — preferência estética
+   comum e bem documentada em praticantes; +25% nesses grupos. Base de hipertrofia idêntica. */
+function sexVolMult(group, sex){
+  if(sex==="f" && group==="glutes") return 1.45;
+  if(sex==="f" && group==="hams") return 1.3;
+  if(sex==="f" && group==="quads") return 1.1;
+  return 1.0;
+}
+/* Ajuste de faixa de reps por região para mulheres (Jung et al. 2023, PLOS One):
+   trem inferior responde melhor a cargas pesadas/poucas reps; trem superior, a mais reps.
+   Só aplica em objetivos de hipertrofia/geral (não mexe em força/resistência puras). */
+const UPPER = ["chest","back","shoulders","biceps","triceps"];
+const LOWER = ["quads","hams","glutes","calves"];
+function repsFor(group, sex, goal, goalP){
+  if(sex==="f" && (goal==="hyper" || goal==="general")){
+    if(LOWER.includes(group)) return "6–10";    // inferior mais pesado
+    if(UPPER.includes(group)) return "12–15";    // superior mais reps
+  }
+  return goalP.r;
+}
+
+function setsPerExercise(group, exp, goalP, freqOfGroupInWeek, exCountThisDay, sex){
   const isBig = BIG.includes(group);
   let weekly = exp.weeklySets * (isBig?1:0.7);
   weekly *= goalP.setMult;
+  weekly *= sexVolMult(group, sex);
   let perSession = weekly / Math.max(freqOfGroupInWeek,1);
   let per = perSession / Math.max(exCountThisDay,1);
   let s = Math.round(per);
   let cap = goalP.maxSets;
   if(freqOfGroupInWeek <= 2 && exCountThisDay === 1) cap = goalP.maxSets + 1;
+  if(sex==="f" && (group==="glutes"||group==="hams")) cap += 1;  // permite volume extra
   s = Math.max(2, Math.min(cap, s));
   return s;
 }
@@ -615,10 +736,13 @@ function groupFrequency(days){
   return f;
 }
 
-function buildPlan(freq, goal, expKey){
+function buildPlan(freq, goal, expKey, sex){
+  sex = sex || "m";
   const split = SPLITS[freq];
   const goalP = GOAL_PARAMS[goal] || GOAL_PARAMS.general;
   const exp = EXP_PARAMS[expKey] || EXP_PARAMS.intermediate;
+  // descanso: mulheres recuperam mais rápido entre séries → descanso levemente menor
+  const restF = (sex==="f") ? shortenRest(goalP.rest) : goalP.rest;
   const gfreq = groupFrequency(split.days);
   const plan = split.days.map((day, di)=>{
     const usedNames = new Set();
@@ -627,14 +751,19 @@ function buildPlan(freq, goal, expKey){
     const ex = [];
     groupsEx.forEach(({g, exs})=>{
       exs.forEach(e=>{
-        const s = setsPerExercise(g, exp, goalP, gfreq[g], exs.length);
-        ex.push({ n:e.n, s:String(s), r:goalP.r, rest:goalP.rest, tip:e.tip });
+        const s = setsPerExercise(g, exp, goalP, gfreq[g], exs.length, sex);
+        ex.push({ n:e.n, s:String(s), r:repsFor(g,sex,goal,goalP), rest:restF, tip:e.tip });
       });
     });
     const focus = day.g.map(g=>FOCUS_LABEL[g]).filter((v,i,a)=>a.indexOf(v)===i).join(" · ");
     return { day:"D"+(di+1), label:day.label, focus:focus, ex:ex };
   });
-  return {plan, split:split.name, splitNote:split.note, dias:split.dias, goalP, exp, freq};
+  return {plan, split:split.name, splitNote:split.note, dias:split.dias, goalP, exp, freq, sex};
+}
+/* reduz levemente a janela de descanso (mulheres) */
+function shortenRest(rest){
+  const map = {"2–4min":"90s–2min","2min":"90s","2–3min":"2min","60–90s":"45–75s","30–60s":"30–45s"};
+  return map[rest] || rest;
 }
 
 /* ===================== NUTRIÇÃO ===================== */
@@ -688,14 +817,15 @@ let DB = load();
 let GOAL = (DB.goal) ? DB.goal : {...DEF_GOAL};
 let PROFILE = DB.profile || null;
 /* PLAN ativo: vem do treino salvo ou de um padrão (4d / hipertrofia / intermediário). */
-let TRAINCFG = (DB.train && DB.train.cfg) ? DB.train.cfg : {freq:4, goal:"hyper", exp:"intermediate"};
+let TRAINCFG = (DB.train && DB.train.cfg) ? DB.train.cfg : {freq:4, goal:"hyper", exp:"intermediate", sex:"m"};
+if(!TRAINCFG.sex) TRAINCFG.sex="m";
 let PLAN = (DB.train && DB.train.plan) ? DB.train.plan
-           : buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp).plan;
+           : buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp, TRAINCFG.sex).plan;
 function load(){
   try{ return JSON.parse(localStorage.getItem(KEY)) || fresh(); }
   catch(e){ return fresh(); }
 }
-function fresh(){ return { sets:{}, daysDone:{}, calendar:{}, food:{}, goal:null, profile:null, train:null, collapsed:{train:false, diet:false} }; }
+function fresh(){ return { sets:{}, daysDone:{}, calendar:{}, food:{}, goal:null, profile:null, train:null, collapsed:{train:false, diet:false}, weights:{}, dietCfg:null, dietPicks:{}, eaten:{} }; }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 function todayKey(){ const d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
 
@@ -731,15 +861,16 @@ function collapseCard(which, val){
   applyCollapse(which);
 }
 function updateTrainSummary(){
-  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp);
+  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp, TRAINCFG.sex);
   const el = document.getElementById('trainSummary');
-  if(el) el.textContent = `${built.split} · ${built.goalP.label} · ${TRAINCFG.freq}×/sem`;
+  const sx = TRAINCFG.sex==="f" ? "♀" : "♂";
+  if(el) el.textContent = `${built.split} · ${built.goalP.label} · ${TRAINCFG.freq}×/sem ${sx}`;
 }
 function updateDietSummary(){
   const el = document.getElementById('dietSummary');
   if(!el) return;
   if(PROFILE){
-    const goalLbl = {gain:"ganho de massa", keep:"manutenção", lose:"perda de gordura"}[PROFILE.goal] || "";
+    const goalLbl = {gain_lean:"ganho leve", gain:"ganho moderado", keep:"manutenção", lose:"perda de gordura"}[PROFILE.goal] || "";
     el.textContent = `${GOAL.kcal} kcal · ${goalLbl}`;
   } else {
     el.textContent = "";
@@ -764,14 +895,28 @@ function renderDay(){
   document.getElementById('dayTitle').textContent=d.label;
   document.getElementById('dayFocus').textContent=d.focus;
   const list=document.getElementById('exList'); list.innerHTML='';
+  if(!DB.weights) DB.weights={};
   d.ex.forEach((e,i)=>{
     const sk = todayKey()+"_"+curDay+"_"+i;
     const on = DB.sets[sk];
+    const wkey = exKey(e.n);
+    const rec = DB.weights[wkey];   // {w:number, t:timestamp}
+    const wVal = rec ? rec.w : "";
+    const hint = rec ? `<span class="w-last">último: <b>${rec.w}kg</b></span>` : `<span class="w-last w-none">registre seu peso →</span>`;
     list.innerHTML += `<div class="ex">
       <div class="ex-num">${i+1}</div>
       <div class="ex-body">
         <div class="ex-name">${e.n}</div>
         <div class="ex-meta"><span><b>${e.s}</b> séries</span><span><b>${e.r}</b> reps</span><span>descanso <b>${e.rest}</b></span></div>
+        <div class="ex-weight">
+          <div class="w-input">
+            <button class="w-step" onclick="bumpWeight('${wkey.replace(/'/g,"\\'")}',-2.5)">–</button>
+            <input type="number" inputmode="decimal" step="0.5" placeholder="kg" value="${wVal}"
+                   id="w_${curDay}_${i}" onchange="setWeight('${wkey.replace(/'/g,"\\'")}', this.value)">
+            <button class="w-step" onclick="bumpWeight('${wkey.replace(/'/g,"\\'")}',2.5)">+</button>
+          </div>
+          ${hint}
+        </div>
         <div class="ex-tip">${e.tip}</div>
       </div>
       <div class="chk ${on?'on':''}" onclick="toggleSet('${sk}',this)"></div>
@@ -781,6 +926,21 @@ function renderDay(){
   const btn=document.getElementById('btnDone');
   btn.classList.toggle('was-done', !!done);
   btn.textContent = done ? "Treino concluído hoje ✓ (toque p/ desfazer)" : "Marcar treino como feito ✓";
+}
+/* chave estável por exercício (independe de dia/data) p/ rastrear progressão de carga */
+function exKey(name){ return name.toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,""); }
+function setWeight(wkey, val){
+  if(!DB.weights) DB.weights={};
+  const num = parseFloat(String(val).replace(",","."));
+  if(isNaN(num) || num<=0){ delete DB.weights[wkey]; }
+  else { DB.weights[wkey] = {w: Math.round(num*2)/2, t: Date.now()}; }
+  save(); renderDay();
+}
+function bumpWeight(wkey, delta){
+  if(!DB.weights) DB.weights={};
+  const cur = DB.weights[wkey] ? DB.weights[wkey].w : 0;
+  let nv = Math.max(0, Math.round((cur+delta)*2)/2);
+  setWeight(wkey, nv);
 }
 function toggleSet(k,el){
   DB.sets[k]=!DB.sets[k]; el.classList.toggle('on'); save();
@@ -802,9 +962,10 @@ function generatePlan(){
   const freq = parseInt(document.getElementById('inFreq').value);
   const goal = document.getElementById('inObj').value;
   const exp  = document.getElementById('inExp').value;
-  const built = buildPlan(freq, goal, exp);
+  const sex  = document.getElementById('inTSex').value;
+  const built = buildPlan(freq, goal, exp, sex);
   PLAN = built.plan;
-  TRAINCFG = {freq, goal, exp};
+  TRAINCFG = {freq, goal, exp, sex};
   DB.train = { cfg:TRAINCFG, plan:PLAN };
   // limpa marcações de séries antigas (exercícios mudaram)
   DB.sets = {};
@@ -818,10 +979,11 @@ function fillTrainForm(){
   document.getElementById('inFreq').value = String(TRAINCFG.freq);
   document.getElementById('inObj').value = TRAINCFG.goal;
   document.getElementById('inExp').value = TRAINCFG.exp;
+  document.getElementById('inTSex').value = TRAINCFG.sex || "m";
 }
 
 function renderTrainInfo(){
-  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp);
+  const built = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp, TRAINCFG.sex);
   const dayNames = {
     2:"dois dias com folga entre eles (ex.: Seg e Qui)",
     3:"em dias alternados (Seg · Qua · Sex), deixando descanso entre as sessões",
@@ -833,17 +995,20 @@ function renderTrainInfo(){
   document.getElementById('trainSub').innerHTML =
     `Divisão <b style="color:var(--txt)">${built.split}</b> · objetivo <b style="color:var(--txt)">${built.goalP.label}</b> · nível <b style="color:var(--txt)">${built.exp.label}</b>. Toque para marcar séries e conclua o dia.`;
   // método/nota científica
+  const sexNote = (built.sex==="f")
+    ? `<br><br><b>Ajuste para o sexo feminino:</b> a base da hipertrofia é a mesma dos homens — o ganho muscular relativo é semelhante entre os sexos. Os ajustes aqui são sutis e baseados em evidência: <b>mais volume de glúteo e posterior</b> (ênfase de trem inferior), <b>descanso um pouco menor</b> entre séries (mulheres recuperam mais rápido e toleram mais volume) e faixa de repetições por região — trem inferior com cargas mais pesadas e menos reps, trem superior com mais repetições.`
+    : "";
   const note = document.getElementById('planMethod');
   note.style.display='block';
   note.innerHTML =
     `<b>Como este treino foi montado:</b> ${built.splitNote} ` +
     `Cada grupo grande recebe ~${built.exp.weeklySets} séries/semana (faixa de respaldo científico: 10–20 séries/músculo/semana, treinado ≥2×/sem). ` +
-    `Para <b>${built.goalP.label.toLowerCase()}</b>: ${built.goalP.note} Faixa de ${built.goalP.r} repetições, descanso de ${built.goalP.rest}, deixando ${built.exp.rir} reps na reserva (RIR). ` +
-    `<b>Melhores dias:</b> treine ${dayNames}.`;
+    `Para <b>${built.goalP.label.toLowerCase()}</b>: ${built.goalP.note} Descanso de ${built.sex==="f"?shortenRest(built.goalP.rest):built.goalP.rest}, deixando ${built.exp.rir} reps na reserva (RIR). ` +
+    `<b>Melhores dias:</b> treine ${dayNames}.` + sexNote;
   // nota de rodapé (progressão)
   document.getElementById('trainNote').innerHTML =
-    "<b>Progressão:</b> some carga ou 1 repetição quando bater o topo da faixa em todas as séries, com boa forma. A cada 5–6 semanas, faça uma semana leve (deload, ~60% das séries) para recuperar. " +
-    "<b>Por que estes exercícios:</b> priorizam compostos primeiro (mais carga e estímulo) e variações halteres/máquina/cabo, seguras ao falhar e eficazes na posição alongada do músculo. Refaça o treino acima sempre que mudar de objetivo ou evoluir de nível.";
+    "<b>Progressão de carga:</b> registre o peso que usou em cada exercício no campo ao lado dele — fica salvo e aparece como \"último\" na próxima vez. Quando bater o topo da faixa de reps em todas as séries com boa forma, suba o peso (use o + para somar 2,5 kg). A cada 5–6 semanas, faça uma semana leve (deload, ~60% das séries) para recuperar. " +
+    "<b>Por que estes exercícios:</b> priorizam compostos primeiro e variações halteres/máquina/cabo, seguras ao falhar e eficazes na posição alongada do músculo. Refaça o treino sempre que mudar de objetivo ou evoluir de nível.";
 }
 
 /* ===================== CALENDÁRIO ===================== */
@@ -943,6 +1108,16 @@ function renderDiet(){
   const log=DB.food[tk]||[];
   let tk_=0,tp=0,tc=0,tf=0;
   log.forEach(f=>{tk_+=f.k;tp+=f.p;tc+=f.c;tf+=f.f;});
+
+  // + itens da dieta gerada marcados como comidos hoje
+  const eaten = (DB.eaten && DB.eaten[tk]) ? DB.eaten[tk] : {};
+  if(DB.dietPlan && Object.keys(eaten).length){
+    DB.dietPlan.meals.forEach((m,mi)=>{
+      m.items.forEach((it,si)=>{
+        if(eaten[mi+"_"+si]){ tk_+=it.kcal; tp+=it.p; tc+=it.c; tf+=it.f; }
+      });
+    });
+  }
   tp=Math.round(tp);tc=Math.round(tc);tf=Math.round(tf);
 
   document.getElementById('kcalNow').textContent=Math.round(tk_);
@@ -953,7 +1128,7 @@ function renderDiet(){
   setBar('p',tp,GOAL.p); setBar('c',tc,GOAL.c); setBar('f',tf,GOAL.f);
 
   const el=document.getElementById('foodLog');
-  if(log.length===0){ el.innerHTML=`<div class="empty-msg">Nenhum alimento adicionado hoje.<br>Use o seletor acima ☝️</div>`; }
+  if(log.length===0){ el.innerHTML=`<div class="empty-msg">Marque os alimentos da sua dieta abaixo conforme for comendo, ou adicione um item extra com o seletor acima ☝️</div>`; }
   else{
     el.innerHTML='';
     log.forEach((f,i)=>{
@@ -966,21 +1141,271 @@ function renderDiet(){
     });
   }
   updateDietNote();
+  renderMeals();   // re-renderiza a dieta p/ refletir os checks
 }
 function setBar(id,now,goal){
   document.getElementById(id+'Now').textContent=now;
   document.getElementById(id+'Goal').textContent=goal;
   document.getElementById(id+'Fill').style.width=Math.min(now/goal*100,100)+"%";
 }
-/* Cardápio modelo BASE, dimensionado para ~2570 kcal (P120/C420/G55).
-   Ao calcular nova meta, as porções são reescaladas proporcionalmente. */
-const MEALS_BASE = [
-  {h:"Café da manhã", l:"{eggs} ovos + {whites} claras · {oats}g aveia c/ leite · 1 banana · 1 col pasta de amendoim"},
-  {h:"Almoço", l:"{lunchP}g frango · {lunchR}g arroz · 100g feijão · brócolis à vontade · 1 col azeite"},
-  {h:"Pré-treino (lanche)", l:"1 scoop whey · {tap}g tapioca · 1 fruta"},
-  {h:"Pós-treino / jantar", l:"{dinP}g carne ou peixe · {sweet}g batata doce · salada · azeite"},
-  {h:"Ceia", l:"1 iogurte natural · {nuts}g castanhas · ou whey c/ leite"},
+/* ===================== MOTOR DE DIETA (base TACO) ===================== */
+/* ============================================================
+   BASE DE ALIMENTOS — valores por 100g (Tabela TACO / TBCA, Brasil)
+   Campos: kcal, p (proteína g), c (carbo g), f (gordura g)
+   cat: prot | carb | fat | veg | fruit
+   diet: 0=onívoro(carne/peixe)  1=vegetariano(ovo/leite ok)  2=vegano
+   role: macro dominante usado para substituição equivalente
+   ============================================================ */
+const DIET_FOODS = [
+  // ----- PROTEÍNAS animais -----
+  {id:"frango",   n:"Peito de frango grelhado",      cat:"prot", diet:0, kcal:159, p:32,   c:0,    f:2.5, unit:"g"},
+  {id:"patinho",  n:"Patinho moído refogado",        cat:"prot", diet:0, kcal:219, p:28,   c:0,    f:11,  unit:"g"},
+  {id:"tilapia",  n:"Filé de tilápia grelhado",      cat:"prot", diet:0, kcal:128, p:26,   c:0,    f:2.6, unit:"g"},
+  {id:"ovo",      n:"Ovo de galinha inteiro",        cat:"prot", diet:1, kcal:143, p:13,   c:1.6,  f:9.5, unit:"g"},
+  {id:"clara",    n:"Clara de ovo",                  cat:"prot", diet:1, kcal:52,  p:11,   c:0.7,  f:0.2, unit:"g"},
+  {id:"atum",     n:"Atum em conserva (água)",       cat:"prot", diet:0, kcal:116, p:26,   c:0,    f:1,   unit:"g"},
+  {id:"carnesuina",n:"Lombo suíno assado",           cat:"prot", diet:0, kcal:210, p:30,   c:0,    f:10,  unit:"g"},
+  {id:"sardinha", n:"Sardinha grelhada",             cat:"prot", diet:0, kcal:164, p:24,   c:0,    f:7,   unit:"g"},
+  // ----- PROTEÍNAS lácteas/veg -----
+  {id:"whey",     n:"Whey protein (pó)",             cat:"prot", diet:1, kcal:400, p:80,   c:8,    f:6,   unit:"g"},
+  {id:"iogurte",  n:"Iogurte natural desnatado",     cat:"prot", diet:1, kcal:41,  p:4.1,  c:4.7,  f:0.5, unit:"g"},
+  {id:"cottage",  n:"Queijo cottage",                cat:"prot", diet:1, kcal:98,  p:11,   c:3,    f:4.3, unit:"g"},
+  {id:"tofu",     n:"Tofu firme",                    cat:"prot", diet:2, kcal:76,  p:8,    c:1.9,  f:4.8, unit:"g"},
+  {id:"graodebico",n:"Grão-de-bico cozido",          cat:"prot", diet:2, kcal:164, p:8.9,  c:27,   f:2.6, unit:"g"},
+  {id:"lentilha", n:"Lentilha cozida",               cat:"prot", diet:2, kcal:116, p:9,    c:20,   f:0.4, unit:"g"},
+  {id:"soja",     n:"Proteína de soja texturizada (hidratada)", cat:"prot", diet:2, kcal:105, p:14, c:7, f:1, unit:"g"},
+  {id:"proteina_ervilha", n:"Proteína de ervilha (pó)", cat:"prot", diet:2, kcal:380, p:80, c:5, f:6, unit:"g"},
+  {id:"edamame",  n:"Edamame (soja verde) cozido",   cat:"prot", diet:2, kcal:122, p:11, c:10, f:5, unit:"g"},
+
+  // ----- CARBOIDRATOS -----
+  {id:"arroz",    n:"Arroz branco cozido",           cat:"carb", diet:2, kcal:128, p:2.5,  c:28,   f:0.2, unit:"g"},
+  {id:"arrozint", n:"Arroz integral cozido",         cat:"carb", diet:2, kcal:124, p:2.6,  c:26,   f:1,   unit:"g"},
+  {id:"feijao",   n:"Feijão carioca cozido",         cat:"carb", diet:2, kcal:76,  p:4.8,  c:13.6, f:0.5, unit:"g"},
+  {id:"batatadoce",n:"Batata-doce cozida",           cat:"carb", diet:2, kcal:77,  p:0.6,  c:18,   f:0.1, unit:"g"},
+  {id:"batata",   n:"Batata inglesa cozida",         cat:"carb", diet:2, kcal:52,  p:1.2,  c:11.9, f:0,   unit:"g"},
+  {id:"mandioca", n:"Mandioca cozida",               cat:"carb", diet:2, kcal:125, p:0.6,  c:30,   f:0.3, unit:"g"},
+  {id:"aveia",    n:"Aveia em flocos",               cat:"carb", diet:2, kcal:394, p:14,   c:67,   f:8,   unit:"g"},
+  {id:"pao",      n:"Pão francês",                   cat:"carb", diet:2, kcal:300, p:8,    c:59,   f:3,   unit:"g"},
+  {id:"tapioca",  n:"Tapioca (goma hidratada)",      cat:"carb", diet:2, kcal:240, p:0,    c:59,   f:0,   unit:"g"},
+  {id:"macarrao", n:"Macarrão cozido",               cat:"carb", diet:1, kcal:111, p:3.4,  c:23,   f:0.9, unit:"g"},
+  {id:"cuscuz",   n:"Cuscuz de milho cozido",        cat:"carb", diet:2, kcal:113, p:2.2,  c:25,   f:0.7, unit:"g"},
+
+  // ----- GORDURAS -----
+  {id:"azeite",   n:"Azeite de oliva",               cat:"fat",  diet:2, kcal:884, p:0,    c:0,    f:100, unit:"g"},
+  {id:"pasta_amend",n:"Pasta de amendoim",           cat:"fat",  diet:2, kcal:589, p:25,   c:20,   f:50,  unit:"g"},
+  {id:"castanha", n:"Castanha-do-pará",              cat:"fat",  diet:2, kcal:643, p:14,   c:15,   f:63,  unit:"g"},
+  {id:"amendoa",  n:"Amêndoas",                      cat:"fat",  diet:2, kcal:581, p:19,   c:20,   f:48,  unit:"g"},
+  {id:"abacate",  n:"Abacate",                       cat:"fat",  diet:2, kcal:96,  p:1.2,  c:6,    f:8.4, unit:"g"},
+  {id:"chia",     n:"Semente de chia",               cat:"fat",  diet:2, kcal:485, p:16,   c:42,   f:31,  unit:"g"},
+
+  // ----- VEGETAIS (volume, micros) -----
+  {id:"brocolis", n:"Brócolis cozido",               cat:"veg",  diet:2, kcal:25,  p:2.1,  c:4,    f:0.3, unit:"g"},
+  {id:"salada",   n:"Salada de folhas + tomate",     cat:"veg",  diet:2, kcal:18,  p:1,    c:3.5,  f:0.2, unit:"g"},
+  {id:"legumes",  n:"Legumes refogados (mistos)",    cat:"veg",  diet:2, kcal:40,  p:2,    c:7,    f:0.5, unit:"g"},
+
+  // ----- FRUTAS -----
+  {id:"banana",   n:"Banana",                        cat:"fruit",diet:2, kcal:92,  p:1.4,  c:24,   f:0.1, unit:"g"},
+  {id:"maca",     n:"Maçã",                          cat:"fruit",diet:2, kcal:56,  p:0.3,  c:15,   f:0.4, unit:"g"},
+  {id:"mamao",    n:"Mamão",                         cat:"fruit",diet:2, kcal:40,  p:0.5,  c:10,   f:0.1, unit:"g"},
+  {id:"morango",  n:"Morango",                       cat:"fruit",diet:2, kcal:30,  p:0.9,  c:6.8,  f:0.3, unit:"g"},
 ];
+
+/* índice rápido */
+const DIET_FOOD_BY_ID = {}; DIET_FOODS.forEach(f=>DIET_FOOD_BY_ID[f.id]=f);
+
+/* filtra por dieta: onívoro vê tudo (diet>=0), vegetariano diet>=1, vegano diet>=2 */
+function allowedFoods(dietLevel){ return DIET_FOODS.filter(f=>f.diet>=dietLevel); }
+
+/* substitutos equivalentes: mesma categoria, respeitando a dieta */
+function equivalents(foodId, dietLevel){
+  const f = DIET_FOOD_BY_ID[foodId];
+  return allowedFoods(dietLevel).filter(x=>x.cat===f.cat);
+}
+
+/* ============================================================
+   MOTOR DE MONTAGEM DE DIETA
+   Entrada: macros-alvo do dia {kcal,p,c,f}, nº de refeições, dieta(0/1/2)
+   Estratégia: distribui proteína/carbo/gordura entre refeições, escolhe
+   um alimento de cada papel por refeição e calcula a porção (g) p/ atingir
+   a fração de macro daquela refeição.
+   ============================================================ */
+
+/* Pesos de distribuição de macro por refeição, conforme nº de refeições.
+   Cada refeição recebe uma fração da proteína/carbo/gordura do dia. */
+function mealTemplates(nMeals){
+  const T = {
+    3: [
+      {name:"Café da manhã", p:0.30, c:0.30, f:0.30, kind:["carb","prot","fruit","fat"]},
+      {name:"Almoço",        p:0.40, c:0.40, f:0.40, kind:["prot","carb","carb","veg","fat"]},
+      {name:"Jantar",        p:0.30, c:0.30, f:0.30, kind:["prot","carb","veg","fat"]},
+    ],
+    4: [
+      {name:"Café da manhã", p:0.25, c:0.28, f:0.30, kind:["carb","prot","fruit"]},
+      {name:"Almoço",        p:0.30, c:0.32, f:0.35, kind:["prot","carb","carb","veg","fat"]},
+      {name:"Lanche",        p:0.20, c:0.15, f:0.15, kind:["prot","fruit"]},
+      {name:"Jantar",        p:0.25, c:0.25, f:0.20, kind:["prot","carb","veg"]},
+    ],
+    5: [
+      {name:"Café da manhã", p:0.20, c:0.25, f:0.25, kind:["carb","prot","fruit"]},
+      {name:"Lanche manhã",  p:0.15, c:0.12, f:0.15, kind:["fruit","fat"]},
+      {name:"Almoço",        p:0.28, c:0.30, f:0.30, kind:["prot","carb","carb","veg","fat"]},
+      {name:"Lanche tarde",  p:0.17, c:0.13, f:0.15, kind:["prot","fruit"]},
+      {name:"Jantar",        p:0.20, c:0.20, f:0.15, kind:["prot","carb","veg"]},
+    ],
+    6: [
+      {name:"Café da manhã", p:0.18, c:0.22, f:0.22, kind:["carb","prot","fruit"]},
+      {name:"Lanche manhã",  p:0.12, c:0.10, f:0.13, kind:["fruit","fat"]},
+      {name:"Almoço",        p:0.25, c:0.26, f:0.27, kind:["prot","carb","carb","veg","fat"]},
+      {name:"Lanche tarde",  p:0.15, c:0.12, f:0.13, kind:["prot","fruit"]},
+      {name:"Jantar",        p:0.20, c:0.20, f:0.15, kind:["prot","carb","veg"]},
+      {name:"Ceia",          p:0.10, c:0.10, f:0.10, kind:["prot"]},
+    ],
+  };
+  return T[nMeals] || T[4];
+}
+
+/* escolha default de alimento por papel, respeitando dieta e variando no dia.
+   dayUsed conta quantas vezes cada id já apareceu no dia (p/ variedade). */
+function defaultFoodFor(kind, dietLevel, mealUsed, dayUsed){
+  const pref = {
+    prot:  dietLevel===2 ? ["tofu","proteina_ervilha","edamame","graodebico","lentilha","soja"] : (dietLevel===1 ? ["ovo","frango","cottage","whey","iogurte","clara"] : ["frango","tilapia","patinho","atum","ovo","sardinha","carnesuina"]),
+    carb:  ["arroz","batatadoce","aveia","mandioca","macarrao","batata","cuscuz","pao"],
+    fat:   ["azeite","pasta_amend","castanha","abacate","amendoa"],
+    veg:   ["brocolis","salada","legumes"],
+    fruit: ["banana","mamao","maca","morango"],
+  }[kind] || [];
+  const ok = id => DIET_FOOD_BY_ID[id] && DIET_FOOD_BY_ID[id].diet>=dietLevel && !mealUsed.has(id);
+  // 1) ainda não usado no dia
+  for(const id of pref){ if(ok(id) && !(dayUsed[id]>0)) return id; }
+  // 2) usado no máximo 1x no dia
+  for(const id of pref){ if(ok(id) && (dayUsed[id]||0)<2) return id; }
+  // 3) qualquer permitido não repetido na refeição
+  for(const id of pref){ if(ok(id)) return id; }
+  const any = allowedFoods(dietLevel).find(f=>f.cat===kind && !mealUsed.has(f.id));
+  return any ? any.id : (pref[0]||null);
+}
+
+function portionForMacro(food, macro, targetGrams){
+  const per100 = food[macro];
+  if(per100 <= 0) return null;
+  return (targetGrams / per100) * 100;
+}
+function round5(x){ return Math.max(5, Math.round(x/5)*5); }
+function macroOf(food, grams){
+  const r = grams/100;
+  return {
+    kcal: Math.round(food.kcal*r),
+    p: +(food.p*r).toFixed(1),
+    c: +(food.c*r).toFixed(1),
+    f: +(food.f*r).toFixed(1),
+  };
+}
+
+/* Monta uma refeição com CONTABILIDADE CRUZADA: cada alimento adicionado
+   desconta TODOS os seus macros das metas restantes, então a próxima escolha
+   compensa. Ordem: gordura → proteína → carbo → veg/fruta. */
+function buildMeal(tpl, dayGoal, dietLevel, dayUsed, picks){
+  const target = { p: dayGoal.p*tpl.p, c: dayGoal.c*tpl.c, f: dayGoal.f*tpl.f };
+  const rem = {p:target.p, c:target.c, f:target.f};   // restante a preencher
+  const items = [];
+  const mealUsed = new Set();
+
+  const order = ["fat","prot","carb","veg","fruit"];
+  const kinds = tpl.kind.slice().sort((a,b)=>order.indexOf(a)-order.indexOf(b));
+
+  let slot=0;
+  kinds.forEach((kind)=>{
+    const chosenId = (picks && picks[slot]!=null) ? picks[slot] : defaultFoodFor(kind, dietLevel, mealUsed, dayUsed);
+    slot++;
+    if(!chosenId){ return; }
+    const food = DIET_FOOD_BY_ID[chosenId];
+    mealUsed.add(chosenId); dayUsed[chosenId]=(dayUsed[chosenId]||0)+1;
+
+    let grams;
+    if(kind==="veg"){ grams=100; }
+    else if(kind==="fruit"){ grams=ttFruitGrams(rem.c); }
+    else {
+      const macro = kind==="fat" ? "f" : (kind==="prot" ? "p" : "c");
+      const want = Math.max(rem[macro], 0);
+      grams = portionForMacro(food, macro, want);
+      if(grams==null || grams<=0) grams = 30;   // alimento sem esse macro: porção simbólica
+    }
+    grams = round5(grams);
+    // limites por tipo
+    if(food.cat==="fat") grams=Math.min(grams,40);
+    if(kind==="prot")   grams=Math.min(grams,300);
+    if(kind==="carb")   grams=Math.min(grams,350);
+    if(kind==="fruit")  grams=Math.min(Math.max(grams,50),200);
+
+    const contrib = macroOf(food, grams);
+    items.push({foodId:chosenId, grams, ...contrib});
+    rem.p-=contrib.p; rem.c-=contrib.c; rem.f-=contrib.f;   // desconta TODOS os macros
+  });
+
+  const got = items.reduce((a,i)=>({p:a.p+i.p,c:a.c+i.c,f:a.f+i.f,kcal:a.kcal+i.kcal}),{p:0,c:0,f:0,kcal:0});
+  return {name:tpl.name, items, totals:got, target};
+}
+function ttFruitGrams(remC){ // fruta cobre parte do carbo restante, limitada
+  if(remC<=0) return 80;
+  return Math.min(150, Math.max(60, remC/24*100*0.5));
+}
+
+function buildDiet(dayGoal, nMeals, dietLevel, savedPicks){
+  const tpls = mealTemplates(nMeals);
+  const meals = [];
+  const dayUsed = {};
+  tpls.forEach((tpl,mi)=>{
+    const picks = savedPicks && savedPicks[mi] ? savedPicks[mi] : null;
+    meals.push(buildMeal(tpl, dayGoal, dietLevel, dayUsed, picks));
+  });
+
+  // ---- PASSO DE CORREÇÃO GLOBAL ----
+  // Ajusta gramagens dos alimentos âncora p/ aproximar a soma do dia da meta.
+  // 2 passadas: corrige proteína (via fontes prot) e carbo (via fontes carb).
+  for(let pass=0; pass<3; pass++){
+    let tot = sumDiet(meals);
+    adjustMacro(meals, "p", "prot", dayGoal.p, tot.p);
+    tot = sumDiet(meals);
+    adjustMacro(meals, "f", "fat", dayGoal.f, tot.f);
+    tot = sumDiet(meals);
+    adjustMacro(meals, "c", "carb", dayGoal.c, tot.c);
+    recomputeMeals(meals);
+  }
+  recomputeMeals(meals);
+
+  const total = sumDiet(meals);
+  return {meals, total, goal:dayGoal};
+}
+
+function sumDiet(meals){
+  const t={kcal:0,p:0,c:0,f:0};
+  meals.forEach(m=>m.items.forEach(i=>{t.kcal+=i.kcal;t.p+=i.p;t.c+=i.c;t.f+=i.f;}));
+  return t;
+}
+/* escala as porções dos alimentos de uma categoria p/ corrigir o déficit/excesso de um macro */
+function adjustMacro(meals, macro, cat, goalVal, curVal){
+  if(curVal<=0) return;
+  const ratio = goalVal/curVal;
+  if(ratio>0.97 && ratio<1.03) return;   // já está perto
+  const k = Math.max(0.6, Math.min(1.4, ratio));   // limita ajuste por passada
+  meals.forEach(m=>m.items.forEach(it=>{
+    const f=DIET_FOOD_BY_ID[it.foodId];
+    if(f.cat===cat){
+      let g = it.grams * k;
+      g = round5(g);
+      if(f.cat==="fat") g=Math.min(g,40);
+      if(cat==="prot") g=Math.min(Math.max(g,30),300);
+      if(cat==="carb") g=Math.min(Math.max(g,20),350);
+      it.grams=g;
+    }
+  }));
+}
+function recomputeMeals(meals){
+  meals.forEach(m=>{
+    m.items.forEach(it=>{ const c=macroOf(DIET_FOOD_BY_ID[it.foodId], it.grams); it.kcal=c.kcal;it.p=c.p;it.c=c.c;it.f=c.f; });
+    m.totals = m.items.reduce((a,i)=>({p:+(a.p+i.p).toFixed(1),c:+(a.c+i.c).toFixed(1),f:+(a.f+i.f).toFixed(1),kcal:a.kcal+i.kcal}),{p:0,c:0,f:0,kcal:0});
+  });
+}
 
 function calcGoal(){
   const sex=document.getElementById('inSex').value;
@@ -997,7 +1422,8 @@ function calcGoal(){
 
   // Ajuste por objetivo
   let kcal, pPerKg;
-  if(goal==="gain"){ kcal = tdee*1.12; pPerKg = 2.0; }
+  if(goal==="gain_lean"){ kcal = tdee*1.08; pPerKg = 2.0; }   // superávit leve ~8% (lean bulk)
+  else if(goal==="gain"){ kcal = tdee*1.15; pPerKg = 2.0; }   // superávit moderado ~15%
   else if(goal==="lose"){ kcal = tdee*0.80; pPerKg = 2.2; }
   else { kcal = tdee; pPerKg = 1.8; }
 
@@ -1010,14 +1436,17 @@ function calcGoal(){
 
   GOAL = { kcal:Math.round(kcal/10)*10, p:Math.round(p), c:Math.round(c), f:Math.round(f) };
   PROFILE = {sex,age,w,h,act,goal};
-  DB.goal=GOAL; DB.profile=PROFILE; save();
+  DB.goal=GOAL; DB.profile=PROFILE;
+  DB.dietCfg = { meals: parseInt(document.getElementById('inMeals').value), diet: parseInt(document.getElementById('inDiet').value) };
+  DB.dietPicks = {};   // nova meta → zera substituições (porções mudam)
+  save();
 
   renderCalcOut(); renderDiet(); renderMeals();
   collapseCard('diet', true);   // recolhe após calcular
 }
 
 function renderCalcOut(){
-  const goalLbl = {gain:"ganho de massa", keep:"manutenção", lose:"perda de gordura"}[PROFILE?.goal] || "—";
+  const goalLbl = {gain_lean:"ganho leve", gain:"ganho moderado", keep:"manutenção", lose:"perda de gordura"}[PROFILE?.goal] || "—";
   const out=document.getElementById('calcOut');
   out.classList.add('show');
   out.innerHTML = `
@@ -1030,10 +1459,14 @@ function renderCalcOut(){
   const m=document.getElementById('calcMethod');
   m.style.display='block';
   const pk = PROFILE ? (GOAL.p/PROFILE.w).toFixed(1) : "—";
-  m.innerHTML = `<b>Como foi calculado:</b> gasto energético pela equação de Mifflin-St Jeor (padrão clínico) × seu nível de atividade. ${PROFILE?.goal==="gain"?"Superávit de ~12% para ganho magro (~0,2–0,4 kg/semana).":PROFILE?.goal==="lose"?"Déficit de 20% para perda de gordura preservando músculo.":"Calorias na manutenção."} Proteína em <b>${pk} g/kg</b> (faixa de respaldo científico para ${PROFILE?.goal==="lose"?"preservar massa em déficit":"hipertrofia"}: 1,6–2,2 g/kg), gordura em 25% das calorias e o restante em carboidrato. Pese-se semanalmente e ajuste ±150 kcal conforme o resultado real.`;
+  m.innerHTML = `<b>Como foi calculado:</b> gasto energético pela equação de Mifflin-St Jeor (padrão clínico) × seu nível de atividade. ${PROFILE?.goal==="gain_lean"?"Superávit leve de ~8% para ganho magro (~0,25% do peso/semana), priorizando músculo com mínima gordura.":PROFILE?.goal==="gain"?"Superávit moderado de ~15% para ganho mais rápido (~0,5% do peso/semana), aceitando um pouco mais de gordura.":PROFILE?.goal==="lose"?"Déficit de 20% para perda de gordura preservando músculo.":"Calorias na manutenção."} Proteína em <b>${pk} g/kg</b> (faixa de respaldo científico para ${PROFILE?.goal==="lose"?"preservar massa em déficit":"hipertrofia"}: 1,6–2,2 g/kg), gordura em 25% das calorias e o restante em carboidrato. Pese-se semanalmente e ajuste ±150 kcal conforme o resultado real.`;
 }
 
 function fillProfileForm(){
+  if(DB.dietCfg){
+    if(document.getElementById('inMeals')) document.getElementById('inMeals').value = String(DB.dietCfg.meals);
+    if(document.getElementById('inDiet'))  document.getElementById('inDiet').value  = String(DB.dietCfg.diet);
+  }
   if(!PROFILE) return;
   document.getElementById('inSex').value=PROFILE.sex;
   document.getElementById('inAge').value=PROFILE.age;
@@ -1044,25 +1477,111 @@ function fillProfileForm(){
   renderCalcOut();
 }
 
+/* dieta gerada atual + substituições do usuário (picks[mealIdx][slotIdx]=foodId) */
+function getDietCfg(){
+  const meals = parseInt((document.getElementById('inMeals')||{}).value || (DB.dietCfg&&DB.dietCfg.meals) || 4);
+  const diet  = parseInt((document.getElementById('inDiet')||{}).value || (DB.dietCfg&&DB.dietCfg.diet) || 0);
+  return {meals, diet};
+}
 function renderMeals(){
   const el=document.getElementById('mealPlan'); el.innerHTML='';
-  // escala em relação à base (2570 kcal)
-  const s = GOAL.kcal / 2570;
-  const r = (base,step)=> Math.max(step, Math.round(base*s/step)*step);
-  const vals = {
-    eggs: Math.max(2, Math.round(3*s)),
-    whites: Math.max(2, Math.round(4*s)),
-    oats: r(80,10),
-    lunchP: r(150,10), lunchR: r(150,10),
-    tap: r(60,10),
-    dinP: r(180,10), sweet: r(200,20),
-    nuts: r(30,5),
-  };
-  MEALS_BASE.forEach(m=>{
-    let l=m.l;
-    Object.keys(vals).forEach(k=> l=l.replace("{"+k+"}", vals[k]));
-    el.innerHTML+=`<div class="meal-suggest"><div class="mh">${m.h}</div><div class="ml">${l}</div></div>`;
+  if(!PROFILE || !GOAL){ return; }
+  const cfg = DB.dietCfg || getDietCfg();
+  const picks = DB.dietPicks || {};
+  const diet = buildDiet(GOAL, cfg.meals, cfg.diet, picks);
+  DB.dietPlan = diet;   // guarda p/ referência (não precisa salvar, é derivado)
+  const tk = todayKey();
+  const eaten = (DB.eaten && DB.eaten[tk]) ? DB.eaten[tk] : {};
+
+  diet.meals.forEach((m, mi)=>{
+    let eatenCount=0;
+    let itemsHtml = m.items.map((it, si)=>{
+      const f = DIET_FOOD_BY_ID[it.foodId];
+      const on = !!eaten[mi+"_"+si];
+      if(on) eatenCount++;
+      return `<div class="di-item ${on?'di-eaten':''}">
+        <div class="di-check ${on?'on':''}" onclick="toggleEaten(${mi},${si})" title="Marcar como comido"></div>
+        <div class="di-info">
+          <div class="di-row">
+            <span class="di-name">${f.n}</span>
+            <span class="di-gram">${it.grams}g</span>
+          </div>
+          <div class="di-row2">
+            <span class="di-macros">${it.kcal} kcal · P${it.p} C${it.c} G${it.f}</span>
+            <button class="di-swap" onclick="openSwap(${mi},${si})">trocar ⇄</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    const allEaten = eatenCount===m.items.length && m.items.length>0;
+    el.innerHTML += `<div class="di-meal ${allEaten?'di-meal-done':''}">
+      <div class="di-head">
+        <span class="di-mname">${m.name}${allEaten?' ✓':''}</span>
+        <span class="di-mtot">${m.totals.kcal} kcal · P${Math.round(m.totals.p)} C${Math.round(m.totals.c)} G${Math.round(m.totals.f)}</span>
+      </div>
+      ${itemsHtml}
+      <button class="di-meal-all" onclick="toggleMeal(${mi})">${allEaten?'Desmarcar refeição':'Marcar refeição inteira ✓'}</button>
+    </div>`;
   });
+  // resumo do total vs meta
+  const t=diet.total;
+  el.innerHTML += `<div class="di-total">
+    <b>Total planejado:</b> ${t.kcal} kcal · Proteína ${Math.round(t.p)}g · Carbo ${Math.round(t.c)}g · Gordura ${Math.round(t.f)}g
+    <div class="di-total-sub">Meta: ${GOAL.kcal} kcal · P${GOAL.p} · C${GOAL.c} · G${GOAL.f} · marque os itens conforme comer e os macros acima vão somando</div>
+  </div>`;
+}
+
+function toggleEaten(mi, si){
+  const tk=todayKey();
+  if(!DB.eaten) DB.eaten={};
+  if(!DB.eaten[tk]) DB.eaten[tk]={};
+  const k=mi+"_"+si;
+  if(DB.eaten[tk][k]) delete DB.eaten[tk][k]; else DB.eaten[tk][k]=true;
+  save();
+  renderDiet();   // atualiza barras + re-renderiza dieta
+}
+function toggleMeal(mi){
+  const tk=todayKey();
+  if(!DB.eaten) DB.eaten={};
+  if(!DB.eaten[tk]) DB.eaten[tk]={};
+  const m=DB.dietPlan.meals[mi];
+  const allOn=m.items.every((_,si)=>DB.eaten[tk][mi+"_"+si]);
+  m.items.forEach((_,si)=>{
+    const k=mi+"_"+si;
+    if(allOn) delete DB.eaten[tk][k]; else DB.eaten[tk][k]=true;
+  });
+  save();
+  renderDiet();
+}
+
+/* abre o seletor de substituição p/ um item (equivalentes da mesma categoria) */
+function openSwap(mi, si){
+  const cfg = DB.dietCfg || getDietCfg();
+  const diet = DB.dietPlan || buildDiet(GOAL, cfg.meals, cfg.diet, DB.dietPicks||{});
+  const item = diet.meals[mi].items[si];
+  const eqs = equivalents(item.foodId, cfg.diet);
+  const cur = DIET_FOOD_BY_ID[item.foodId];
+  let opts = eqs.map(f=>{
+    const sel = f.id===item.foodId ? ' di-opt-sel' : '';
+    return `<button class="di-opt${sel}" onclick="doSwap(${mi},${si},'${f.id}')">
+      <span class="di-opt-n">${f.n}</span>
+      <span class="di-opt-m">${f.kcal}kcal · P${f.p} C${f.c} G${f.f} /100g</span>
+    </button>`;
+  }).join('');
+  document.getElementById('swapTitle').textContent = "Trocar "+cur.n;
+  document.getElementById('swapList').innerHTML = opts;
+  document.getElementById('swapOverlay').classList.add('show');
+  SWAP_CTX = {mi, si};
+}
+let SWAP_CTX = null;
+function closeSwap(){ document.getElementById('swapOverlay').classList.remove('show'); SWAP_CTX=null; }
+function doSwap(mi, si, foodId){
+  if(!DB.dietPicks) DB.dietPicks = {};
+  if(!DB.dietPicks[mi]) DB.dietPicks[mi] = {};
+  DB.dietPicks[mi][si] = foodId;
+  save();
+  closeSwap();
+  renderMeals();
 }
 function updateDietNote(){
   const note=document.getElementById('dietNote');
@@ -1070,19 +1589,22 @@ function updateDietNote(){
     note.innerHTML = "<b>Preencha seu perfil acima</b> para gerar uma meta personalizada. Enquanto isso, mostramos uma meta padrão de exemplo. O cardápio modelo abaixo se ajusta automaticamente quando você calcular.";
   } else {
     const pk=(GOAL.p/PROFILE.w).toFixed(1);
-    note.innerHTML = `<b>Sua meta:</b> ~${GOAL.kcal} kcal/dia com ${GOAL.p}g de proteína (${pk} g/kg), ${GOAL.c}g de carbo e ${GOAL.f}g de gordura. Pese-se semanalmente: ${PROFILE.goal==="gain"?"ganho de 0,2–0,4 kg/semana é o ritmo certo; se subir gordura rápido, corte ~150 kcal de carbo":PROFILE.goal==="lose"?"perda de 0,3–0,7 kg/semana é saudável; se travar, corte ~150 kcal":"oscilação mínima é o esperado"}. Recalcule o perfil sempre que seu peso mudar bastante.`;
+    note.innerHTML = `<b>Sua meta:</b> ~${GOAL.kcal} kcal/dia com ${GOAL.p}g de proteína (${pk} g/kg), ${GOAL.c}g de carbo e ${GOAL.f}g de gordura. Pese-se semanalmente: ${(PROFILE.goal==="gain"||PROFILE.goal==="gain_lean")?"ganho de 0,25–0,5% do seu peso por semana é o ritmo certo; se subir gordura rápido demais, reduza ~150 kcal de carbo":PROFILE.goal==="lose"?"perda de 0,5–1% do peso por semana é saudável; se travar, corte ~150 kcal":"oscilação mínima é o esperado"}. Recalcule sempre que seu peso mudar bastante.`;
   }
 }
 
 function resetToday(){
-  if(!confirm("Zerar o registro alimentar de hoje?")) return;
-  delete DB.food[todayKey()]; save(); renderDiet();
+  if(!confirm("Zerar o registro alimentar de hoje (itens marcados e extras)?")) return;
+  const tk=todayKey();
+  delete DB.food[tk];
+  if(DB.eaten) delete DB.eaten[tk];
+  save(); renderDiet();
 }
 function hardReset(){
   if(!confirm("Apagar TODOS os dados (treinos, calendário, dieta)? Não dá pra desfazer.")) return;
   DB=fresh(); GOAL={...DEF_GOAL}; PROFILE=null; save();
-  TRAINCFG = {freq:4, goal:"hyper", exp:"intermediate"};
-  PLAN = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp).plan;
+  TRAINCFG = {freq:4, goal:"hyper", exp:"intermediate", sex:"m"};
+  PLAN = buildPlan(TRAINCFG.freq, TRAINCFG.goal, TRAINCFG.exp, TRAINCFG.sex).plan;
   document.getElementById('calcOut').classList.remove('show');
   document.getElementById('calcMethod').style.display='none';
   ['inAge','inWeight','inHeight'].forEach(id=>document.getElementById(id).value='');
